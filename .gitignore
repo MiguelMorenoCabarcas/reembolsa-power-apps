@@ -1,0 +1,10 @@
+# Paquetes generados
+dist/
+*.msapp
+
+# Configuración real del sitio (usa tools/listas.json como plantilla)
+app/tools/listas.local.json
+
+# Python
+__pycache__/
+*.pyc

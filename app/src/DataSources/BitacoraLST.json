@@ -1,0 +1,40 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+    "CdpRevision": {
+      "BaseUrl": "/",
+      "LastChangedTimeString": "2026-11-23T00:00:00.0000000Z",
+      "RevisionNumber": 1
+    },
+    "ConnectedDataSourceInfoNameMapping": {
+      "Accion": "Accion",
+      "Accion#Id": "Accion Id",
+      "Actor": "Actor",
+      "Actor#Claims": "Actor Claims",
+      "ActorEmail": "ActorEmail",
+      "Author": "Creado por",
+      "Author#Claims": "Creado por Claims",
+      "Comentario": "Comentario",
+      "ComplianceAssetId": "Id. de activo de cumplimiento normativo",
+      "Created": "Creado",
+      "Editor": "Modificado por",
+      "Editor#Claims": "Modificado por Claims",
+      "EstadoAnterior": "EstadoAnterior",
+      "EstadoNuevo": "EstadoNuevo",
+      "FechaAccion": "FechaAccion",
+      "ID": "ID",
+      "Modified": "Modificado",
+      "Nivel": "Nivel",
+      "OData__ColorTag": "Etiqueta de color",
+      "Solicitud": "Solicitud",
+      "Solicitud#Id": "Solicitud Id",
+      "Title": "Title"
+    },
+    "DatasetName": "https://TU-TENANT.sharepoint.com/sites/Reembolsa",
+    "EncodeDataset": true,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "Name": "BitacoraLST",
+    "Type": "ConnectedDataSourceInfo"
+  }
+]

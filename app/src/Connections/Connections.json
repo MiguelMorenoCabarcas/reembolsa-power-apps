@@ -1,0 +1,60 @@
+{
+  "8fa7caf7-f187-0f3a-d3ea-b0bd79c07f32": {
+    "appActions": [
+      "providers/PowerPlatform.Governance/Operations/Read",
+      "providers/PowerPlatform.Governance/Operations/Write",
+      "providers/PowerPlatform.Governance/Operations/Delete"
+    ],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "SharePoint",
+      "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1809/1.0.1809.4723/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://TU-TENANT.sharepoint.com/sites/Reembolsa": {
+        "dataSources": {
+          "BitacoraLST": {
+            "tableName": "f07c416a-7b02-0ab8-4187-662c18d18d98"
+          },
+          "CategoriasGastoLST": {
+            "tableName": "404566da-8744-069c-b449-0a51a44ee5b8"
+          },
+          "CentrosCostoLST": {
+            "tableName": "f0373ad0-5db2-1e2f-4ea2-9d645e905882"
+          },
+          "ConsecutivoLST": {
+            "tableName": "693ec4d7-408f-4d12-ca9f-5ddffa45a815"
+          },
+          "GastosLST": {
+            "tableName": "75736908-ba41-14a3-a7f0-df5cb3c9abcd"
+          },
+          "ParametrosLST": {
+            "tableName": "4432a6e5-dba1-fb86-7f1b-4bd5b127587c"
+          },
+          "SolicitudesLST": {
+            "tableName": "d44c963e-4a9e-4138-6997-dbae7f4a5a5b"
+          },
+          "UsuariosRolLST": {
+            "tableName": "e381a7de-04ab-edc5-6efa-661a83d97c37"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "CentrosCostoLST",
+      "CategoriasGastoLST",
+      "UsuariosRolLST",
+      "ParametrosLST",
+      "ConsecutivoLST",
+      "SolicitudesLST",
+      "GastosLST",
+      "BitacoraLST"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "8fa7caf7-f187-0f3a-d3ea-b0bd79c07f32"
+  }
+}

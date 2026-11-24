@@ -1,0 +1,1539 @@
+DetalleSolicitudScreen As screen:
+    Fill: =ColorFondo
+    OnVisible: |-
+        =Refresh(SolicitudesLST);
+        Set(gblSel, LookUp(SolicitudesLST, ID = gblSelId));
+        Set(gblSelNo, gblSel.Title);
+        Reset(detComentario);
+        Reset(detReferencia)
+
+    detSidebarBg As rectangle:
+        BorderThickness: =0
+        Fill: =ColorOscuro
+        Height: =768
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =220
+        X: =0
+        Y: =0
+        ZIndex: =1
+
+    detAppNombre As label:
+        Align: =Align.Left
+        Color: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =32
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =22
+        Text: ="Reembolsa"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =172
+        Wrap: =true
+        X: =24
+        Y: =22
+        ZIndex: =2
+
+    detAppLema As label:
+        Align: =Align.Left
+        Color: =ColorSidebarSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Gestión de gastos"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =172
+        Wrap: =true
+        X: =24
+        Y: =54
+        ZIndex: =3
+
+    detNav0 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(InicioScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Inicio"
+        Visible: =true
+        Width: =200
+        X: =10
+        Y: =110
+        ZIndex: =4
+
+    detNav1 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(MisSolicitudesScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Mis solicitudes"
+        Visible: =true
+        Width: =200
+        X: =10
+        Y: =162
+        ZIndex: =5
+
+    detNav2 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: |-
+            =Set(gblEditId, 0);
+            Set(gblEditNo, "");
+            Navigate(NuevaSolicitudScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Nueva solicitud"
+        Visible: =true
+        Width: =200
+        X: =10
+        Y: =214
+        ZIndex: =6
+
+    detNav3 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(BandejaScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Bandeja de aprobación"
+        Visible: =gblEsAprobador
+        Width: =200
+        X: =10
+        Y: =266
+        ZIndex: =7
+
+    detNav4 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(ReportesScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Reportes"
+        Visible: =gblEsFinanzas
+        Width: =200
+        X: =10
+        Y: =318
+        ZIndex: =8
+
+    detSidebarLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorSidebarHover
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =188
+        X: =16
+        Y: =680
+        ZIndex: =9
+
+    detUsuarioNombre As label:
+        Align: =Align.Left
+        Color: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =22
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =gblNombre
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =180
+        Wrap: =false
+        X: =24
+        Y: =690
+        ZIndex: =10
+
+    detUsuarioRol As label:
+        Align: =Align.Left
+        Color: =ColorSidebarSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: =gblRol
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =180
+        Wrap: =false
+        X: =24
+        Y: =712
+        ZIndex: =11
+
+    detHeaderBg As rectangle:
+        BorderThickness: =0
+        Fill: =Color.White
+        Height: =64
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =1146
+        X: =220
+        Y: =0
+        ZIndex: =12
+
+    detHeaderLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =1146
+        X: =220
+        Y: =63
+        ZIndex: =13
+
+    detTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =64
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =22
+        Text: ="Detalle de la solicitud"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =700
+        Wrap: =true
+        X: =244
+        Y: =0
+        ZIndex: =14
+
+    detFecha As label:
+        Align: =Align.Right
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =64
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =Text(Today(), "dd/mm/yyyy")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =300
+        Wrap: =true
+        X: =1042
+        Y: =0
+        ZIndex: =15
+
+    detInfoCard As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =296
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =560
+        X: =244
+        Y: =88
+        ZIndex: =16
+
+    detNo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =34
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =20
+        Text: =gblSel.Title
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =300
+        Wrap: =false
+        X: =264
+        Y: =100
+        ZIndex: =17
+
+    detEstFondo As rectangle:
+        BorderThickness: =0
+        Fill: =LookUp(EstadosMeta, Raw = gblSel.Estado.Value).Fondo
+        Height: =26
+        RadiusBottomLeft: =13
+        RadiusBottomRight: =13
+        RadiusTopLeft: =13
+        RadiusTopRight: =13
+        Width: =200
+        X: =584
+        Y: =105
+        ZIndex: =18
+
+    detEstTexto As label:
+        Align: =Align.Center
+        Color: =LookUp(EstadosMeta, Raw = gblSel.Estado.Value).Letra
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =26
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: =LookUp(EstadosMeta, Raw = gblSel.Estado.Value).Texto
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =200
+        Wrap: =false
+        X: =584
+        Y: =105
+        ZIndex: =19
+
+    detInfoLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =560
+        X: =244
+        Y: =142
+        ZIndex: =20
+
+    detLbl0 As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Solicitante"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =150
+        Wrap: =true
+        X: =264
+        Y: =152
+        ZIndex: =21
+
+    detVal0 As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =Coalesce(LookUp(UsuariosRolLST, UsuarioEmail = gblSel.SolicitanteEmail).Title, gblSel.SolicitanteEmail)
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =370
+        Wrap: =false
+        X: =414
+        Y: =152
+        ZIndex: =22
+
+    detLbl1 As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Centro de costo"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =150
+        Wrap: =true
+        X: =264
+        Y: =182
+        ZIndex: =23
+
+    detVal1 As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =gblSel.CentroCostoCod
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =370
+        Wrap: =false
+        X: =414
+        Y: =182
+        ZIndex: =24
+
+    detLbl2 As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Fecha"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =150
+        Wrap: =true
+        X: =264
+        Y: =212
+        ZIndex: =25
+
+    detVal2 As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =Text(gblSel.FechaSolicitud, "dd/mm/yyyy")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =370
+        Wrap: =false
+        X: =414
+        Y: =212
+        ZIndex: =26
+
+    detLbl3 As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Monto total"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =150
+        Wrap: =true
+        X: =264
+        Y: =242
+        ZIndex: =27
+
+    detVal3 As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: |-
+            ="$" & Text(gblSel.MontoTotal, "#,##0")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =370
+        Wrap: =false
+        X: =414
+        Y: =242
+        ZIndex: =28
+
+    detLbl4 As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Pendiente con"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =150
+        Wrap: =true
+        X: =264
+        Y: =272
+        ZIndex: =29
+
+    detVal4 As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =Switch(gblSel.Estado.Value, "PendienteJefe", Coalesce(LookUp(UsuariosRolLST, UsuarioEmail = gblSel.AprobadorEmail).Title, gblSel.AprobadorEmail), "PendienteFinanzas", "Equipo de Finanzas", "-")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =370
+        Wrap: =false
+        X: =414
+        Y: =272
+        ZIndex: =30
+
+    detMotivoLbl As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =22
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Motivo"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =150
+        Wrap: =true
+        X: =264
+        Y: =306
+        ZIndex: =31
+
+    detMotivo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =48
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =gblSel.Motivo
+        VerticalAlign: =VerticalAlign.Top
+        Width: =520
+        Wrap: =true
+        X: =264
+        Y: =328
+        ZIndex: =32
+
+    detAccCard As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =296
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =516
+        X: =826
+        Y: =88
+        ZIndex: =33
+
+    detAccTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =30
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =15
+        Text: ="Acciones"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =300
+        Wrap: =true
+        X: =846
+        Y: =100
+        ZIndex: =34
+
+    detSinAcc As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =40
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: ="No tienes acciones disponibles para esta solicitud."
+        VerticalAlign: =VerticalAlign.Top
+        Visible: =!((gblSel.Estado.Value = "PendienteJefe" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && (Lower(gblSel.AprobadorEmail) = gblUserEmail || gblRol = "Administrador")) || (gblSel.Estado.Value = "PendienteFinanzas" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && gblEsFinanzas)) && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail && gblSel.Estado.Value in ["Borrador", "Devuelta"]) && !(gblEsFinanzas && gblSel.Estado.Value = "Aprobada")
+        Width: =476
+        Wrap: =true
+        X: =846
+        Y: =140
+        ZIndex: =35
+
+    detEditar As button:
+        Align: =Align.Center
+        BorderColor: =ColorPrimario
+        BorderThickness: =1
+        Color: =ColorPrimario
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =44
+        HoverColor: =ColorPrimario
+        HoverFill: =ColorPrimarioClaro
+        OnSelect: |-
+            =Set(gblEditId, gblSel.ID);
+            Set(gblEditNo, gblSel.Title);
+            Navigate(NuevaSolicitudScreen, ScreenTransition.None)
+        PressedColor: =ColorPrimario
+        PressedFill: =ColorPrimarioClaro
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Editar solicitud"
+        Visible: =Lower(gblSel.SolicitanteEmail) = gblUserEmail && gblSel.Estado.Value in ["Borrador", "Devuelta"]
+        Width: =220
+        X: =846
+        Y: =140
+        ZIndex: =36
+
+    detEnviar As button:
+        Align: =Align.Center
+        BorderColor: =ColorPrimario
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =ColorPrimario
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =44
+        HoverColor: =Color.White
+        HoverFill: =ColorPrimario
+        OnSelect: |-
+            =Refresh(SolicitudesLST);
+            Set(gblSel, LookUp(SolicitudesLST, ID = gblSelId));
+            If(
+                !(Lower(gblSel.SolicitanteEmail) = gblUserEmail && gblSel.Estado.Value in ["Borrador", "Devuelta"]),
+                Notify("La solicitud cambió de estado. Se actualizó la pantalla.", NotificationType.Warning),
+                Set(gblEstadoAnt, gblSel.Estado.Value);
+                Set(
+                    gblRes,
+                    IfError(
+                        Patch(
+                            SolicitudesLST,
+                            gblSel,
+                            {
+                                Estado: {Value: If(IsBlank(gblUser.JefeEmail) || Lower(gblUser.JefeEmail) = gblUserEmail, "PendienteFinanzas", "PendienteJefe")},
+                                NivelActual: If(IsBlank(gblUser.JefeEmail) || Lower(gblUser.JefeEmail) = gblUserEmail, 2, 1),
+                                AprobadorEmail: If(IsBlank(gblUser.JefeEmail) || Lower(gblUser.JefeEmail) = gblUserEmail, "", Lower(gblUser.JefeEmail)),
+                                RequiereFinanzas: gblSel.MontoTotal >= gblUmbral,
+                                FechaEnvio: Now()
+                            }
+                        ),
+                        Blank()
+                    )
+                );
+                If(
+                    IsBlank(gblRes),
+                    Notify("No se pudo guardar el cambio. Intenta de nuevo.", NotificationType.Error),
+                    IfError(
+                        Patch(
+                            BitacoraLST,
+                            Defaults(BitacoraLST),
+                            {
+                                Title: gblSel.Title,
+                                Solicitud: {Id: gblSel.ID, Value: gblSel.Title},
+                                Accion: {Value: "Enviada"},
+                                Nivel: 1,
+                                Actor: UsuarioActual,
+                                ActorEmail: gblUserEmail,
+                                EstadoAnterior: gblEstadoAnt,
+                                EstadoNuevo: If(IsBlank(gblUser.JefeEmail) || Lower(gblUser.JefeEmail) = gblUserEmail, "PendienteFinanzas", "PendienteJefe"),
+                                Comentario: Trim(detComentario.Text),
+                                FechaAccion: Now()
+                            }
+                        );
+                        true,
+                        Notify("El cambio se guardó, pero no se pudo escribir en la bitácora.", NotificationType.Warning)
+                    );
+                    Set(gblSel, gblRes);
+                    Reset(detComentario);
+                    Reset(detReferencia);
+                    Notify("Solicitud enviada a aprobación.", NotificationType.Success)
+                )
+            )
+        PressedColor: =Color.White
+        PressedFill: =ColorPrimario
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: =If(gblSel.Estado.Value = "Devuelta", "Reenviar a aprobación", "Enviar a aprobación")
+        Visible: =Lower(gblSel.SolicitanteEmail) = gblUserEmail && gblSel.Estado.Value in ["Borrador", "Devuelta"]
+        Width: =240
+        X: =1082
+        Y: =140
+        ZIndex: =37
+
+    detComLbl As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Comentario (obligatorio al devolver o rechazar)"
+        VerticalAlign: =VerticalAlign.Middle
+        Visible: =(gblSel.Estado.Value = "PendienteJefe" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && (Lower(gblSel.AprobadorEmail) = gblUserEmail || gblRol = "Administrador")) || (gblSel.Estado.Value = "PendienteFinanzas" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && gblEsFinanzas)
+        Width: =476
+        Wrap: =true
+        X: =846
+        Y: =140
+        ZIndex: =38
+
+    detComentario As text:
+        BorderColor: =ColorBorde
+        BorderThickness: =1
+        Color: =ColorTexto
+        Default: =""
+        Fill: =Color.White
+        FocusedBorderColor: =ColorPrimario
+        Font: =Font.'Open Sans'
+        Height: =70
+        HintText: ="Escribe un comentario"
+        HoverBorderColor: =ColorPrimario
+        Mode: =TextMode.MultiLine
+        PressedBorderColor: =ColorPrimario
+        RadiusBottomLeft: =6
+        RadiusBottomRight: =6
+        RadiusTopLeft: =6
+        RadiusTopRight: =6
+        Size: =12
+        Visible: =(gblSel.Estado.Value = "PendienteJefe" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && (Lower(gblSel.AprobadorEmail) = gblUserEmail || gblRol = "Administrador")) || (gblSel.Estado.Value = "PendienteFinanzas" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && gblEsFinanzas)
+        Width: =476
+        X: =846
+        Y: =162
+        ZIndex: =39
+
+    detAprobar As button:
+        Align: =Align.Center
+        BorderColor: =ColorExito
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =ColorExito
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =44
+        HoverColor: =Color.White
+        HoverFill: =ColorExito
+        OnSelect: |-
+            =Refresh(SolicitudesLST);
+            Set(gblSel, LookUp(SolicitudesLST, ID = gblSelId));
+            If(
+                !((gblSel.Estado.Value = "PendienteJefe" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && (Lower(gblSel.AprobadorEmail) = gblUserEmail || gblRol = "Administrador")) || (gblSel.Estado.Value = "PendienteFinanzas" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && gblEsFinanzas)),
+                Notify("La solicitud cambió de estado. Se actualizó la pantalla.", NotificationType.Warning),
+                Set(gblEstadoAnt, gblSel.Estado.Value);
+                Set(
+                    gblRes,
+                    IfError(
+                        Patch(
+                            SolicitudesLST,
+                            gblSel,
+                            {
+                                Estado: {Value: If(gblSel.Estado.Value = "PendienteJefe", If(gblSel.MontoTotal >= gblUmbral, "PendienteFinanzas", "Aprobada"), "Aprobada")},
+                                NivelActual: If(gblSel.Estado.Value = "PendienteJefe" && gblSel.MontoTotal >= gblUmbral, 2, 0),
+                                AprobadorEmail: ""
+                            }
+                        ),
+                        Blank()
+                    )
+                );
+                If(
+                    IsBlank(gblRes),
+                    Notify("No se pudo guardar el cambio. Intenta de nuevo.", NotificationType.Error),
+                    IfError(
+                        Patch(
+                            BitacoraLST,
+                            Defaults(BitacoraLST),
+                            {
+                                Title: gblSel.Title,
+                                Solicitud: {Id: gblSel.ID, Value: gblSel.Title},
+                                Accion: {Value: If(gblEstadoAnt = "PendienteJefe", "AprobadaJefe", "AprobadaFinanzas")},
+                                Nivel: gblSel.NivelActual,
+                                Actor: UsuarioActual,
+                                ActorEmail: gblUserEmail,
+                                EstadoAnterior: gblEstadoAnt,
+                                EstadoNuevo: If(gblSel.Estado.Value = "PendienteJefe", If(gblSel.MontoTotal >= gblUmbral, "PendienteFinanzas", "Aprobada"), "Aprobada"),
+                                Comentario: Trim(detComentario.Text),
+                                FechaAccion: Now()
+                            }
+                        );
+                        true,
+                        Notify("El cambio se guardó, pero no se pudo escribir en la bitácora.", NotificationType.Warning)
+                    );
+                    Set(gblSel, gblRes);
+                    Reset(detComentario);
+                    Reset(detReferencia);
+                    Notify("Solicitud aprobada.", NotificationType.Success)
+                )
+            )
+        PressedColor: =Color.White
+        PressedFill: =ColorExito
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Aprobar"
+        Visible: =(gblSel.Estado.Value = "PendienteJefe" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && (Lower(gblSel.AprobadorEmail) = gblUserEmail || gblRol = "Administrador")) || (gblSel.Estado.Value = "PendienteFinanzas" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && gblEsFinanzas)
+        Width: =150
+        X: =846
+        Y: =246
+        ZIndex: =40
+
+    detDevolver As button:
+        Align: =Align.Center
+        BorderColor: =ColorAcento
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =ColorAcento
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =44
+        HoverColor: =Color.White
+        HoverFill: =ColorAcento
+        OnSelect: |-
+            =If(
+                IsBlank(Trim(detComentario.Text)),
+                Notify("Escribe un comentario para continuar.", NotificationType.Warning),
+                Refresh(SolicitudesLST);
+                Set(gblSel, LookUp(SolicitudesLST, ID = gblSelId));
+                If(
+                    !((gblSel.Estado.Value = "PendienteJefe" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && (Lower(gblSel.AprobadorEmail) = gblUserEmail || gblRol = "Administrador")) || (gblSel.Estado.Value = "PendienteFinanzas" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && gblEsFinanzas)),
+                    Notify("La solicitud cambió de estado. Se actualizó la pantalla.", NotificationType.Warning),
+                    Set(gblEstadoAnt, gblSel.Estado.Value);
+                    Set(
+                        gblRes,
+                        IfError(
+                            Patch(
+                                SolicitudesLST,
+                                gblSel,
+                                {
+                                    Estado: {Value: "Devuelta"},
+                                    NivelActual: 0,
+                                    AprobadorEmail: ""
+                                }
+                            ),
+                            Blank()
+                        )
+                    );
+                    If(
+                        IsBlank(gblRes),
+                        Notify("No se pudo guardar el cambio. Intenta de nuevo.", NotificationType.Error),
+                        IfError(
+                            Patch(
+                                BitacoraLST,
+                                Defaults(BitacoraLST),
+                                {
+                                    Title: gblSel.Title,
+                                    Solicitud: {Id: gblSel.ID, Value: gblSel.Title},
+                                    Accion: {Value: "Devuelta"},
+                                    Nivel: gblSel.NivelActual,
+                                    Actor: UsuarioActual,
+                                    ActorEmail: gblUserEmail,
+                                    EstadoAnterior: gblEstadoAnt,
+                                    EstadoNuevo: "Devuelta",
+                                    Comentario: Trim(detComentario.Text),
+                                    FechaAccion: Now()
+                                }
+                            );
+                            true,
+                            Notify("El cambio se guardó, pero no se pudo escribir en la bitácora.", NotificationType.Warning)
+                        );
+                        Set(gblSel, gblRes);
+                        Reset(detComentario);
+                        Reset(detReferencia);
+                        Notify("Solicitud devuelta al solicitante.", NotificationType.Success)
+                    )
+                )
+            )
+        PressedColor: =Color.White
+        PressedFill: =ColorAcento
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Devolver"
+        Visible: =(gblSel.Estado.Value = "PendienteJefe" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && (Lower(gblSel.AprobadorEmail) = gblUserEmail || gblRol = "Administrador")) || (gblSel.Estado.Value = "PendienteFinanzas" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && gblEsFinanzas)
+        Width: =150
+        X: =1012
+        Y: =246
+        ZIndex: =41
+
+    detRechazar As button:
+        Align: =Align.Center
+        BorderColor: =ColorError
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =ColorError
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =44
+        HoverColor: =Color.White
+        HoverFill: =ColorError
+        OnSelect: |-
+            =If(
+                IsBlank(Trim(detComentario.Text)),
+                Notify("Escribe un comentario para continuar.", NotificationType.Warning),
+                Refresh(SolicitudesLST);
+                Set(gblSel, LookUp(SolicitudesLST, ID = gblSelId));
+                If(
+                    !((gblSel.Estado.Value = "PendienteJefe" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && (Lower(gblSel.AprobadorEmail) = gblUserEmail || gblRol = "Administrador")) || (gblSel.Estado.Value = "PendienteFinanzas" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && gblEsFinanzas)),
+                    Notify("La solicitud cambió de estado. Se actualizó la pantalla.", NotificationType.Warning),
+                    Set(gblEstadoAnt, gblSel.Estado.Value);
+                    Set(
+                        gblRes,
+                        IfError(
+                            Patch(
+                                SolicitudesLST,
+                                gblSel,
+                                {
+                                    Estado: {Value: "Rechazada"},
+                                    NivelActual: 0,
+                                    AprobadorEmail: "",
+                                    FechaCierre: Now()
+                                }
+                            ),
+                            Blank()
+                        )
+                    );
+                    If(
+                        IsBlank(gblRes),
+                        Notify("No se pudo guardar el cambio. Intenta de nuevo.", NotificationType.Error),
+                        IfError(
+                            Patch(
+                                BitacoraLST,
+                                Defaults(BitacoraLST),
+                                {
+                                    Title: gblSel.Title,
+                                    Solicitud: {Id: gblSel.ID, Value: gblSel.Title},
+                                    Accion: {Value: "Rechazada"},
+                                    Nivel: gblSel.NivelActual,
+                                    Actor: UsuarioActual,
+                                    ActorEmail: gblUserEmail,
+                                    EstadoAnterior: gblEstadoAnt,
+                                    EstadoNuevo: "Rechazada",
+                                    Comentario: Trim(detComentario.Text),
+                                    FechaAccion: Now()
+                                }
+                            );
+                            true,
+                            Notify("El cambio se guardó, pero no se pudo escribir en la bitácora.", NotificationType.Warning)
+                        );
+                        Set(gblSel, gblRes);
+                        Reset(detComentario);
+                        Reset(detReferencia);
+                        Notify("Solicitud rechazada.", NotificationType.Success)
+                    )
+                )
+            )
+        PressedColor: =Color.White
+        PressedFill: =ColorError
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Rechazar"
+        Visible: =(gblSel.Estado.Value = "PendienteJefe" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && (Lower(gblSel.AprobadorEmail) = gblUserEmail || gblRol = "Administrador")) || (gblSel.Estado.Value = "PendienteFinanzas" && !(Lower(gblSel.SolicitanteEmail) = gblUserEmail) && gblEsFinanzas)
+        Width: =144
+        X: =1178
+        Y: =246
+        ZIndex: =42
+
+    detRefLbl As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Referencia del pago"
+        VerticalAlign: =VerticalAlign.Middle
+        Visible: =gblEsFinanzas && gblSel.Estado.Value = "Aprobada"
+        Width: =476
+        Wrap: =true
+        X: =846
+        Y: =140
+        ZIndex: =43
+
+    detReferencia As text:
+        BorderColor: =ColorBorde
+        BorderThickness: =1
+        Color: =ColorTexto
+        Default: =""
+        Fill: =Color.White
+        FocusedBorderColor: =ColorPrimario
+        Font: =Font.'Open Sans'
+        Height: =38
+        HintText: ="Ej. TRF-2026-1234"
+        HoverBorderColor: =ColorPrimario
+        PressedBorderColor: =ColorPrimario
+        RadiusBottomLeft: =6
+        RadiusBottomRight: =6
+        RadiusTopLeft: =6
+        RadiusTopRight: =6
+        Size: =12
+        Visible: =gblEsFinanzas && gblSel.Estado.Value = "Aprobada"
+        Width: =476
+        X: =846
+        Y: =162
+        ZIndex: =44
+
+    detPagar As button:
+        Align: =Align.Center
+        BorderColor: =ColorPrimario
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =ColorPrimario
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =44
+        HoverColor: =Color.White
+        HoverFill: =ColorPrimario
+        OnSelect: |-
+            =If(
+                IsBlank(Trim(detReferencia.Text)),
+                Notify("Escribe la referencia del pago.", NotificationType.Warning),
+                Refresh(SolicitudesLST);
+                Set(gblSel, LookUp(SolicitudesLST, ID = gblSelId));
+                If(
+                    !(gblEsFinanzas && gblSel.Estado.Value = "Aprobada"),
+                    Notify("La solicitud cambió de estado. Se actualizó la pantalla.", NotificationType.Warning),
+                    Set(gblEstadoAnt, gblSel.Estado.Value);
+                    Set(
+                        gblRes,
+                        IfError(
+                            Patch(
+                                SolicitudesLST,
+                                gblSel,
+                                {
+                                    Estado: {Value: "Pagada"},
+                                    NivelActual: 0,
+                                    AprobadorEmail: "",
+                                    ReferenciaPago: Trim(detReferencia.Text),
+                                    FechaPago: Today(),
+                                    FechaCierre: Now()
+                                }
+                            ),
+                            Blank()
+                        )
+                    );
+                    If(
+                        IsBlank(gblRes),
+                        Notify("No se pudo guardar el cambio. Intenta de nuevo.", NotificationType.Error),
+                        IfError(
+                            Patch(
+                                BitacoraLST,
+                                Defaults(BitacoraLST),
+                                {
+                                    Title: gblSel.Title,
+                                    Solicitud: {Id: gblSel.ID, Value: gblSel.Title},
+                                    Accion: {Value: "Pagada"},
+                                    Nivel: gblSel.NivelActual,
+                                    Actor: UsuarioActual,
+                                    ActorEmail: gblUserEmail,
+                                    EstadoAnterior: gblEstadoAnt,
+                                    EstadoNuevo: "Pagada",
+                                    Comentario: Trim(detComentario.Text),
+                                    FechaAccion: Now()
+                                }
+                            );
+                            true,
+                            Notify("El cambio se guardó, pero no se pudo escribir en la bitácora.", NotificationType.Warning)
+                        );
+                        Set(gblSel, gblRes);
+                        Reset(detComentario);
+                        Reset(detReferencia);
+                        Notify("Pago registrado.", NotificationType.Success)
+                    )
+                )
+            )
+        PressedColor: =Color.White
+        PressedFill: =ColorPrimario
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Registrar pago"
+        Visible: =gblEsFinanzas && gblSel.Estado.Value = "Aprobada"
+        Width: =476
+        X: =846
+        Y: =214
+        ZIndex: =45
+
+    detGastosCard As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =344
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =560
+        X: =244
+        Y: =400
+        ZIndex: =46
+
+    detGastosTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =30
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =14
+        Text: ="Gastos (" & CountRows(detGastosGal.AllItems) & ")"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =300
+        Wrap: =true
+        X: =264
+        Y: =410
+        ZIndex: =47
+
+    detGastosLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =560
+        X: =244
+        Y: =446
+        ZIndex: =48
+
+    detGastosGal As gallery.galleryVertical:
+        BorderThickness: =0
+        Fill: =Color.Transparent
+        Height: =294
+        Items: =Filter(GastosLST, Title = gblSelNo)
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        ShowScrollbar: =true
+        TemplateFill: =Color.Transparent
+        TemplatePadding: =0
+        TemplateSize: =56
+        Width: =560
+        WrapCount: =1
+        X: =244
+        Y: =448
+        ZIndex: =49
+
+        detGRowCat As label:
+            Align: =Align.Left
+            Color: =ColorOscuro
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =22
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =12
+            Text: =ThisItem.CategoriaNombre
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =230
+            Wrap: =false
+            X: =20
+            Y: =6
+            ZIndex: =1
+
+        detGRowProv As label:
+            Align: =Align.Left
+            Color: =ColorTextoSuave
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Height: =20
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: =ThisItem.Proveedor & If(!IsBlank(ThisItem.NumeroRecibo), " - " & ThisItem.NumeroRecibo, "")
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =300
+            Wrap: =false
+            X: =20
+            Y: =28
+            ZIndex: =2
+
+        detGRowFecha As label:
+            Align: =Align.Left
+            Color: =ColorTexto
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Height: =56
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: =Text(ThisItem.FechaGasto, "dd/mm/yyyy")
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =90
+            Wrap: =false
+            X: =330
+            Y: =0
+            ZIndex: =3
+
+        detGRowMonto As label:
+            Align: =Align.Right
+            Color: =ColorOscuro
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =56
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =12
+            Text: |-
+                ="$" & Text(ThisItem.Monto, "#,##0")
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =120
+            Wrap: =false
+            X: =420
+            Y: =0
+            ZIndex: =4
+
+        detGRowSep As rectangle:
+            BorderThickness: =0
+            Fill: =ColorBorde
+            Height: =1
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =560
+            X: =0
+            Y: =55
+            ZIndex: =5
+
+    detBitCard As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =344
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =516
+        X: =826
+        Y: =400
+        ZIndex: =50
+
+    detBitTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =30
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =14
+        Text: ="Historial"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =300
+        Wrap: =true
+        X: =846
+        Y: =410
+        ZIndex: =51
+
+    detBitLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =516
+        X: =826
+        Y: =446
+        ZIndex: =52
+
+    detBitGal As gallery.galleryVertical:
+        BorderThickness: =0
+        Fill: =Color.Transparent
+        Height: =294
+        Items: =Sort(Filter(BitacoraLST, Title = gblSelNo), ID, SortOrder.Descending)
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        ShowScrollbar: =true
+        TemplateFill: =Color.Transparent
+        TemplatePadding: =0
+        TemplateSize: =72
+        Width: =516
+        WrapCount: =1
+        X: =826
+        Y: =448
+        ZIndex: =53
+
+        detBRowPunto As rectangle:
+            BorderThickness: =0
+            Fill: =ColorPrimario
+            Height: =10
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Width: =10
+            X: =22
+            Y: =20
+            ZIndex: =1
+
+        detBRowAccion As label:
+            Align: =Align.Left
+            Color: =ColorOscuro
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =22
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =12
+            Text: =Switch(ThisItem.Accion.Value, "AprobadaJefe", "Aprobada por el jefe", "AprobadaFinanzas", "Aprobada por Finanzas", ThisItem.Accion.Value)
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =250
+            Wrap: =false
+            X: =44
+            Y: =8
+            ZIndex: =2
+
+        detBRowFecha As label:
+            Align: =Align.Right
+            Color: =ColorTextoSuave
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Height: =22
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: =Text(ThisItem.FechaAccion, "dd/mm/yyyy hh:mm")
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =196
+            Wrap: =false
+            X: =300
+            Y: =8
+            ZIndex: =3
+
+        detBRowActor As label:
+            Align: =Align.Left
+            Color: =ColorTextoSuave
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Height: =40
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: |-
+                =Coalesce(LookUp(UsuariosRolLST, UsuarioEmail = ThisItem.ActorEmail).Title, ThisItem.ActorEmail) & If(!IsBlank(ThisItem.Comentario), ": " & ThisItem.Comentario, "")
+            VerticalAlign: =VerticalAlign.Top
+            Width: =452
+            Wrap: =true
+            X: =44
+            Y: =30
+            ZIndex: =4
+
+        detBRowSep As rectangle:
+            BorderThickness: =0
+            Fill: =ColorBorde
+            Height: =1
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =516
+            X: =0
+            Y: =71
+            ZIndex: =5
+
+    detVolver As button:
+        Align: =Align.Center
+        BorderColor: =ColorPrimario
+        BorderThickness: =1
+        Color: =ColorPrimario
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =36
+        HoverColor: =ColorPrimario
+        HoverFill: =ColorPrimarioClaro
+        OnSelect: =Navigate(MisSolicitudesScreen, ScreenTransition.None)
+        PressedColor: =ColorPrimario
+        PressedFill: =ColorPrimarioClaro
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="< Volver"
+        Width: =100
+        X: =704
+        Y: =14
+        ZIndex: =54

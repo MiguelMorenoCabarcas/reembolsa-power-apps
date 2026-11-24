@@ -1,0 +1,1070 @@
+ReportesScreen As screen:
+    Fill: =ColorFondo
+    OnVisible: |-
+        =If(!gblEsFinanzas, Navigate(InicioScreen, ScreenTransition.None));
+        Reset(repPeriodo);
+        Set(gblDesde, DateAdd(Today(), -repPeriodo.Selected.Dias, TimeUnit.Days));
+        ClearCollect(colRepSol, Filter(SolicitudesLST, FechaSolicitud >= gblDesde));
+        ClearCollect(colRepGas, Filter(GastosLST, FechaGasto >= gblDesde));
+        ClearCollect(
+            colRepEstado,
+            Sort(
+                DropColumns(AddColumns(GroupBy(AddColumns(colRepSol, Grupo, Estado.Value), Grupo, g), Total, Sum(g, MontoTotal)), g),
+                Total,
+                SortOrder.Descending
+            )
+        );
+        ClearCollect(
+            colRepCentro,
+            Sort(
+                DropColumns(AddColumns(GroupBy(colRepSol, CentroCostoCod, g), Total, Sum(g, MontoTotal)), g),
+                Total,
+                SortOrder.Descending
+            )
+        );
+        ClearCollect(
+            colRepCategoria,
+            Sort(
+                DropColumns(AddColumns(GroupBy(colRepGas, CategoriaNombre, g), Total, Sum(g, Monto)), g),
+                Total,
+                SortOrder.Descending
+            )
+        )
+
+    repSidebarBg As rectangle:
+        BorderThickness: =0
+        Fill: =ColorOscuro
+        Height: =768
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =220
+        X: =0
+        Y: =0
+        ZIndex: =1
+
+    repAppNombre As label:
+        Align: =Align.Left
+        Color: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =32
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =22
+        Text: ="Reembolsa"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =172
+        Wrap: =true
+        X: =24
+        Y: =22
+        ZIndex: =2
+
+    repAppLema As label:
+        Align: =Align.Left
+        Color: =ColorSidebarSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Gestión de gastos"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =172
+        Wrap: =true
+        X: =24
+        Y: =54
+        ZIndex: =3
+
+    repNav0 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(InicioScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Inicio"
+        Visible: =true
+        Width: =200
+        X: =10
+        Y: =110
+        ZIndex: =4
+
+    repNav1 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(MisSolicitudesScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Mis solicitudes"
+        Visible: =true
+        Width: =200
+        X: =10
+        Y: =162
+        ZIndex: =5
+
+    repNav2 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: |-
+            =Set(gblEditId, 0);
+            Set(gblEditNo, "");
+            Navigate(NuevaSolicitudScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Nueva solicitud"
+        Visible: =true
+        Width: =200
+        X: =10
+        Y: =214
+        ZIndex: =6
+
+    repNav3 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(BandejaScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Bandeja de aprobación"
+        Visible: =gblEsAprobador
+        Width: =200
+        X: =10
+        Y: =266
+        ZIndex: =7
+
+    repNav4 As button:
+        Align: =Align.Left
+        BorderColor: =ColorPrimario
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =ColorPrimario
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =44
+        HoverColor: =Color.White
+        HoverFill: =ColorPrimario
+        OnSelect: =Navigate(ReportesScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =Color.White
+        PressedFill: =ColorPrimario
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Reportes"
+        Visible: =gblEsFinanzas
+        Width: =200
+        X: =10
+        Y: =318
+        ZIndex: =8
+
+    repSidebarLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorSidebarHover
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =188
+        X: =16
+        Y: =680
+        ZIndex: =9
+
+    repUsuarioNombre As label:
+        Align: =Align.Left
+        Color: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =22
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =gblNombre
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =180
+        Wrap: =false
+        X: =24
+        Y: =690
+        ZIndex: =10
+
+    repUsuarioRol As label:
+        Align: =Align.Left
+        Color: =ColorSidebarSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: =gblRol
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =180
+        Wrap: =false
+        X: =24
+        Y: =712
+        ZIndex: =11
+
+    repHeaderBg As rectangle:
+        BorderThickness: =0
+        Fill: =Color.White
+        Height: =64
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =1146
+        X: =220
+        Y: =0
+        ZIndex: =12
+
+    repHeaderLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =1146
+        X: =220
+        Y: =63
+        ZIndex: =13
+
+    repTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =64
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =22
+        Text: ="Reportes"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =700
+        Wrap: =true
+        X: =244
+        Y: =0
+        ZIndex: =14
+
+    repFecha As label:
+        Align: =Align.Right
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =64
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =Text(Today(), "dd/mm/yyyy")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =300
+        Wrap: =true
+        X: =1042
+        Y: =0
+        ZIndex: =15
+
+    repPeriodoLbl As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =36
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: ="Período"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =80
+        Wrap: =true
+        X: =244
+        Y: =88
+        ZIndex: =16
+
+    repPeriodo As dropdown:
+        BorderColor: =ColorBorde
+        BorderThickness: =1
+        ChevronBackground: =ColorPrimario
+        ChevronFill: =Color.White
+        Color: =ColorTexto
+        Default: ="Últimos 180 días"
+        Fill: =Color.White
+        Font: =Font.'Open Sans'
+        Height: =36
+        HoverColor: =ColorTexto
+        HoverFill: =ColorFondo
+        Items: |-
+            =Table({Value: "Últimos 30 días", Dias: 30}, {Value: "Últimos 90 días", Dias: 90}, {Value: "Últimos 180 días", Dias: 180}, {Value: "Últimos 365 días", Dias: 365})
+        OnChange: |-
+            =Set(gblDesde, DateAdd(Today(), -repPeriodo.Selected.Dias, TimeUnit.Days));
+            ClearCollect(colRepSol, Filter(SolicitudesLST, FechaSolicitud >= gblDesde));
+            ClearCollect(colRepGas, Filter(GastosLST, FechaGasto >= gblDesde));
+            ClearCollect(
+                colRepEstado,
+                Sort(
+                    DropColumns(AddColumns(GroupBy(AddColumns(colRepSol, Grupo, Estado.Value), Grupo, g), Total, Sum(g, MontoTotal)), g),
+                    Total,
+                    SortOrder.Descending
+                )
+            );
+            ClearCollect(
+                colRepCentro,
+                Sort(
+                    DropColumns(AddColumns(GroupBy(colRepSol, CentroCostoCod, g), Total, Sum(g, MontoTotal)), g),
+                    Total,
+                    SortOrder.Descending
+                )
+            );
+            ClearCollect(
+                colRepCategoria,
+                Sort(
+                    DropColumns(AddColumns(GroupBy(colRepGas, CategoriaNombre, g), Total, Sum(g, Monto)), g),
+                    Total,
+                    SortOrder.Descending
+                )
+            )
+        SelectionColor: =Color.White
+        SelectionFill: =ColorPrimario
+        Size: =12
+        Width: =220
+        X: =324
+        Y: =88
+        ZIndex: =17
+
+    repKpi1Card As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =100
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =258
+        X: =244
+        Y: =140
+        ZIndex: =18
+
+    repKpi1Barra As rectangle:
+        BorderThickness: =0
+        Fill: =ColorPrimario
+        Height: =72
+        RadiusBottomLeft: =2
+        RadiusBottomRight: =2
+        RadiusTopLeft: =2
+        RadiusTopRight: =2
+        Width: =4
+        X: =244
+        Y: =154
+        ZIndex: =19
+
+    repKpi1Valor As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =52
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =30
+        Text: |-
+            ="$" & Text(Sum(colRepSol, MontoTotal), "#,##0")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =264
+        Y: =150
+        ZIndex: =20
+
+    repKpi1Texto As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: ="Total solicitado"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =264
+        Y: =200
+        ZIndex: =21
+
+    repKpi2Card As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =100
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =258
+        X: =524
+        Y: =140
+        ZIndex: =22
+
+    repKpi2Barra As rectangle:
+        BorderThickness: =0
+        Fill: =ColorExito
+        Height: =72
+        RadiusBottomLeft: =2
+        RadiusBottomRight: =2
+        RadiusTopLeft: =2
+        RadiusTopRight: =2
+        Width: =4
+        X: =524
+        Y: =154
+        ZIndex: =23
+
+    repKpi2Valor As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =52
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =30
+        Text: |-
+            ="$" & Text(Sum(Filter(colRepSol, Estado.Value = "Pagada"), MontoTotal), "#,##0")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =544
+        Y: =150
+        ZIndex: =24
+
+    repKpi2Texto As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: ="Total pagado"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =544
+        Y: =200
+        ZIndex: =25
+
+    repKpi3Card As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =100
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =258
+        X: =804
+        Y: =140
+        ZIndex: =26
+
+    repKpi3Barra As rectangle:
+        BorderThickness: =0
+        Fill: =ColorAcento
+        Height: =72
+        RadiusBottomLeft: =2
+        RadiusBottomRight: =2
+        RadiusTopLeft: =2
+        RadiusTopRight: =2
+        Width: =4
+        X: =804
+        Y: =154
+        ZIndex: =27
+
+    repKpi3Valor As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =52
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =30
+        Text: |-
+            ="$" & Text(Sum(Filter(colRepSol, Estado.Value in ["PendienteJefe", "PendienteFinanzas", "Aprobada"]), MontoTotal), "#,##0")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =824
+        Y: =150
+        ZIndex: =28
+
+    repKpi3Texto As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: ="Por aprobar o pagar"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =824
+        Y: =200
+        ZIndex: =29
+
+    repKpi4Card As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =100
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =258
+        X: =1084
+        Y: =140
+        ZIndex: =30
+
+    repKpi4Barra As rectangle:
+        BorderThickness: =0
+        Fill: =ColorInfo
+        Height: =72
+        RadiusBottomLeft: =2
+        RadiusBottomRight: =2
+        RadiusTopLeft: =2
+        RadiusTopRight: =2
+        Width: =4
+        X: =1084
+        Y: =154
+        ZIndex: =31
+
+    repKpi4Valor As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =52
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =30
+        Text: |-
+            =With({_p: Filter(colRepSol, Estado.Value = "Pagada")}, If(CountRows(_p) = 0, "-", Text(Average(_p, DateDiff(FechaEnvio, FechaCierre, TimeUnit.Days)), "0.0") & " días"))
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =1104
+        Y: =150
+        ZIndex: =32
+
+    repKpi4Texto As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: ="Tiempo medio hasta el pago"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =1104
+        Y: =200
+        ZIndex: =33
+
+    repEstadoCard As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =480
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =350
+        X: =244
+        Y: =264
+        ZIndex: =34
+
+    repEstadoTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =30
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =14
+        Text: ="Por estado"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =310
+        Wrap: =true
+        X: =264
+        Y: =276
+        ZIndex: =35
+
+    repEstadoLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =350
+        X: =244
+        Y: =312
+        ZIndex: =36
+
+    repEstadoGal As gallery.galleryVertical:
+        BorderThickness: =0
+        Fill: =Color.Transparent
+        Height: =424
+        Items: =colRepEstado
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        ShowScrollbar: =true
+        TemplateFill: =Color.Transparent
+        TemplatePadding: =0
+        TemplateSize: =56
+        Width: =350
+        WrapCount: =1
+        X: =244
+        Y: =316
+        ZIndex: =37
+
+        repEstadoRowNombre As label:
+            Align: =Align.Left
+            Color: =ColorTexto
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =22
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: =Coalesce(LookUp(EstadosMeta, Raw = ThisItem.Grupo).Texto, ThisItem.Grupo)
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =200
+            Wrap: =false
+            X: =20
+            Y: =6
+            ZIndex: =1
+
+        repEstadoRowValor As label:
+            Align: =Align.Right
+            Color: =ColorOscuro
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Height: =22
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: |-
+                ="$" & Text(ThisItem.Total, "#,##0")
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =176
+            Wrap: =false
+            X: =150
+            Y: =6
+            ZIndex: =2
+
+        repEstadoRowBase As rectangle:
+            BorderThickness: =0
+            Fill: =ColorFondo
+            Height: =10
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Width: =310
+            X: =20
+            Y: =34
+            ZIndex: =3
+
+        repEstadoRowBarra As rectangle:
+            BorderThickness: =0
+            Fill: =ColorPrimario
+            Height: =10
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Width: =Max(6, ThisItem.Total / Max(1, Max(colRepEstado, Total)) * 306)
+            X: =20
+            Y: =34
+            ZIndex: =4
+
+    repCentroCard As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =480
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =350
+        X: =618
+        Y: =264
+        ZIndex: =38
+
+    repCentroTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =30
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =14
+        Text: ="Por centro de costo"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =310
+        Wrap: =true
+        X: =638
+        Y: =276
+        ZIndex: =39
+
+    repCentroLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =350
+        X: =618
+        Y: =312
+        ZIndex: =40
+
+    repCentroGal As gallery.galleryVertical:
+        BorderThickness: =0
+        Fill: =Color.Transparent
+        Height: =424
+        Items: =colRepCentro
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        ShowScrollbar: =true
+        TemplateFill: =Color.Transparent
+        TemplatePadding: =0
+        TemplateSize: =56
+        Width: =350
+        WrapCount: =1
+        X: =618
+        Y: =316
+        ZIndex: =41
+
+        repCentroRowNombre As label:
+            Align: =Align.Left
+            Color: =ColorTexto
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =22
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: =ThisItem.CentroCostoCod
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =200
+            Wrap: =false
+            X: =20
+            Y: =6
+            ZIndex: =1
+
+        repCentroRowValor As label:
+            Align: =Align.Right
+            Color: =ColorOscuro
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Height: =22
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: |-
+                ="$" & Text(ThisItem.Total, "#,##0")
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =176
+            Wrap: =false
+            X: =150
+            Y: =6
+            ZIndex: =2
+
+        repCentroRowBase As rectangle:
+            BorderThickness: =0
+            Fill: =ColorFondo
+            Height: =10
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Width: =310
+            X: =20
+            Y: =34
+            ZIndex: =3
+
+        repCentroRowBarra As rectangle:
+            BorderThickness: =0
+            Fill: =ColorPrimario
+            Height: =10
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Width: =Max(6, ThisItem.Total / Max(1, Max(colRepCentro, Total)) * 306)
+            X: =20
+            Y: =34
+            ZIndex: =4
+
+    repCategoriaCard As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =480
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =350
+        X: =992
+        Y: =264
+        ZIndex: =42
+
+    repCategoriaTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =30
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =14
+        Text: ="Por categoría de gasto"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =310
+        Wrap: =true
+        X: =1012
+        Y: =276
+        ZIndex: =43
+
+    repCategoriaLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =350
+        X: =992
+        Y: =312
+        ZIndex: =44
+
+    repCategoriaGal As gallery.galleryVertical:
+        BorderThickness: =0
+        Fill: =Color.Transparent
+        Height: =424
+        Items: =colRepCategoria
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        ShowScrollbar: =true
+        TemplateFill: =Color.Transparent
+        TemplatePadding: =0
+        TemplateSize: =56
+        Width: =350
+        WrapCount: =1
+        X: =992
+        Y: =316
+        ZIndex: =45
+
+        repCategoriaRowNombre As label:
+            Align: =Align.Left
+            Color: =ColorTexto
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =22
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: =ThisItem.CategoriaNombre
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =200
+            Wrap: =false
+            X: =20
+            Y: =6
+            ZIndex: =1
+
+        repCategoriaRowValor As label:
+            Align: =Align.Right
+            Color: =ColorOscuro
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Height: =22
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: |-
+                ="$" & Text(ThisItem.Total, "#,##0")
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =176
+            Wrap: =false
+            X: =150
+            Y: =6
+            ZIndex: =2
+
+        repCategoriaRowBase As rectangle:
+            BorderThickness: =0
+            Fill: =ColorFondo
+            Height: =10
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Width: =310
+            X: =20
+            Y: =34
+            ZIndex: =3
+
+        repCategoriaRowBarra As rectangle:
+            BorderThickness: =0
+            Fill: =ColorPrimario
+            Height: =10
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Width: =Max(6, ThisItem.Total / Max(1, Max(colRepCategoria, Total)) * 306)
+            X: =20
+            Y: =34
+            ZIndex: =4

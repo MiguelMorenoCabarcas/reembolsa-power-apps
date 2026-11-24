@@ -1,0 +1,241 @@
+{
+  "site": "https://TU-TENANT.sharepoint.com/sites/Reembolsa",
+  "listas": {
+    "CentrosCostoLST": {
+      "id": "f0373ad0-5db2-1e2f-4ea2-9d645e905882",
+      "fields": [
+        [
+          "Nombre",
+          "Text"
+        ],
+        [
+          "Responsable",
+          "User"
+        ],
+        [
+          "Activo",
+          "Boolean"
+        ]
+      ]
+    },
+    "CategoriasGastoLST": {
+      "id": "404566da-8744-069c-b449-0a51a44ee5b8",
+      "fields": [
+        [
+          "LimiteMonto",
+          "Number"
+        ],
+        [
+          "RequiereRecibo",
+          "Boolean"
+        ],
+        [
+          "Activo",
+          "Boolean"
+        ]
+      ]
+    },
+    "UsuariosRolLST": {
+      "id": "e381a7de-04ab-edc5-6efa-661a83d97c37",
+      "fields": [
+        [
+          "Usuario",
+          "User"
+        ],
+        [
+          "UsuarioEmail",
+          "Text"
+        ],
+        [
+          "Rol",
+          "Choice"
+        ],
+        [
+          "CentroCosto",
+          "Lookup"
+        ],
+        [
+          "JefeEmail",
+          "Text"
+        ],
+        [
+          "Activo",
+          "Boolean"
+        ]
+      ]
+    },
+    "ParametrosLST": {
+      "id": "4432a6e5-dba1-fb86-7f1b-4bd5b127587c",
+      "fields": [
+        [
+          "Valor",
+          "Text"
+        ]
+      ]
+    },
+    "ConsecutivoLST": {
+      "id": "693ec4d7-408f-4d12-ca9f-5ddffa45a815",
+      "fields": [
+        [
+          "Tipo",
+          "Text"
+        ],
+        [
+          "Valor",
+          "Text"
+        ]
+      ]
+    },
+    "SolicitudesLST": {
+      "id": "d44c963e-4a9e-4138-6997-dbae7f4a5a5b",
+      "fields": [
+        [
+          "Solicitante",
+          "User"
+        ],
+        [
+          "SolicitanteEmail",
+          "Text"
+        ],
+        [
+          "CentroCosto",
+          "Lookup"
+        ],
+        [
+          "CentroCostoCod",
+          "Text"
+        ],
+        [
+          "Motivo",
+          "Note"
+        ],
+        [
+          "FechaSolicitud",
+          "Date"
+        ],
+        [
+          "MontoTotal",
+          "Number"
+        ],
+        [
+          "Estado",
+          "Choice"
+        ],
+        [
+          "NivelActual",
+          "Number"
+        ],
+        [
+          "AprobadorEmail",
+          "Text"
+        ],
+        [
+          "RequiereFinanzas",
+          "Boolean"
+        ],
+        [
+          "FechaEnvio",
+          "DateTime"
+        ],
+        [
+          "FechaCierre",
+          "DateTime"
+        ],
+        [
+          "ReferenciaPago",
+          "Text"
+        ],
+        [
+          "FechaPago",
+          "Date"
+        ]
+      ]
+    },
+    "GastosLST": {
+      "id": "75736908-ba41-14a3-a7f0-df5cb3c9abcd",
+      "fields": [
+        [
+          "Solicitud",
+          "Lookup"
+        ],
+        [
+          "Categoria",
+          "Lookup"
+        ],
+        [
+          "CategoriaNombre",
+          "Text"
+        ],
+        [
+          "FechaGasto",
+          "Date"
+        ],
+        [
+          "Proveedor",
+          "Text"
+        ],
+        [
+          "Descripcion",
+          "Text"
+        ],
+        [
+          "Monto",
+          "Number"
+        ],
+        [
+          "NumeroRecibo",
+          "Text"
+        ]
+      ]
+    },
+    "BitacoraLST": {
+      "id": "f07c416a-7b02-0ab8-4187-662c18d18d98",
+      "fields": [
+        [
+          "Solicitud",
+          "Lookup"
+        ],
+        [
+          "Accion",
+          "Choice"
+        ],
+        [
+          "Nivel",
+          "Number"
+        ],
+        [
+          "Actor",
+          "User"
+        ],
+        [
+          "ActorEmail",
+          "Text"
+        ],
+        [
+          "EstadoAnterior",
+          "Text"
+        ],
+        [
+          "EstadoNuevo",
+          "Text"
+        ],
+        [
+          "Comentario",
+          "Note"
+        ],
+        [
+          "FechaAccion",
+          "DateTime"
+        ]
+      ]
+    }
+  },
+  "screens": [
+    "InicioScreen",
+    "MisSolicitudesScreen",
+    "NuevaSolicitudScreen",
+    "DetalleSolicitudScreen",
+    "BandejaScreen",
+    "ReportesScreen"
+  ]
+}

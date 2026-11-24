@@ -1,0 +1,997 @@
+InicioScreen As screen:
+    Fill: =ColorFondo
+    OnVisible: |-
+        =Refresh(SolicitudesLST);
+        ClearCollect(colMisSol, Filter(SolicitudesLST, SolicitanteEmail = gblUserEmail));
+        If(
+            gblEsAprobador,
+            If(
+                gblRol = "Administrador",
+                ClearCollect(colBandeja, Filter(SolicitudesLST, Estado.Value = "PendienteJefe")),
+                ClearCollect(colBandeja, Filter(SolicitudesLST, Estado.Value = "PendienteJefe", AprobadorEmail = gblUserEmail))
+            );
+            If(gblEsFinanzas, Collect(colBandeja, Filter(SolicitudesLST, Estado.Value = "PendienteFinanzas"))),
+            Clear(colBandeja)
+        )
+
+    iniSidebarBg As rectangle:
+        BorderThickness: =0
+        Fill: =ColorOscuro
+        Height: =768
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =220
+        X: =0
+        Y: =0
+        ZIndex: =1
+
+    iniAppNombre As label:
+        Align: =Align.Left
+        Color: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =32
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =22
+        Text: ="Reembolsa"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =172
+        Wrap: =true
+        X: =24
+        Y: =22
+        ZIndex: =2
+
+    iniAppLema As label:
+        Align: =Align.Left
+        Color: =ColorSidebarSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Gestión de gastos"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =172
+        Wrap: =true
+        X: =24
+        Y: =54
+        ZIndex: =3
+
+    iniNav0 As button:
+        Align: =Align.Left
+        BorderColor: =ColorPrimario
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =ColorPrimario
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =44
+        HoverColor: =Color.White
+        HoverFill: =ColorPrimario
+        OnSelect: =Navigate(InicioScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =Color.White
+        PressedFill: =ColorPrimario
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Inicio"
+        Visible: =true
+        Width: =200
+        X: =10
+        Y: =110
+        ZIndex: =4
+
+    iniNav1 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(MisSolicitudesScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Mis solicitudes"
+        Visible: =true
+        Width: =200
+        X: =10
+        Y: =162
+        ZIndex: =5
+
+    iniNav2 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: |-
+            =Set(gblEditId, 0);
+            Set(gblEditNo, "");
+            Navigate(NuevaSolicitudScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Nueva solicitud"
+        Visible: =true
+        Width: =200
+        X: =10
+        Y: =214
+        ZIndex: =6
+
+    iniNav3 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(BandejaScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Bandeja de aprobación"
+        Visible: =gblEsAprobador
+        Width: =200
+        X: =10
+        Y: =266
+        ZIndex: =7
+
+    iniNav4 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(ReportesScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Reportes"
+        Visible: =gblEsFinanzas
+        Width: =200
+        X: =10
+        Y: =318
+        ZIndex: =8
+
+    iniSidebarLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorSidebarHover
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =188
+        X: =16
+        Y: =680
+        ZIndex: =9
+
+    iniUsuarioNombre As label:
+        Align: =Align.Left
+        Color: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =22
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =gblNombre
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =180
+        Wrap: =false
+        X: =24
+        Y: =690
+        ZIndex: =10
+
+    iniUsuarioRol As label:
+        Align: =Align.Left
+        Color: =ColorSidebarSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: =gblRol
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =180
+        Wrap: =false
+        X: =24
+        Y: =712
+        ZIndex: =11
+
+    iniHeaderBg As rectangle:
+        BorderThickness: =0
+        Fill: =Color.White
+        Height: =64
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =1146
+        X: =220
+        Y: =0
+        ZIndex: =12
+
+    iniHeaderLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =1146
+        X: =220
+        Y: =63
+        ZIndex: =13
+
+    iniTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =64
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =22
+        Text: ="Inicio"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =700
+        Wrap: =true
+        X: =244
+        Y: =0
+        ZIndex: =14
+
+    iniFecha As label:
+        Align: =Align.Right
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =64
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =Text(Today(), "dd/mm/yyyy")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =300
+        Wrap: =true
+        X: =1042
+        Y: =0
+        ZIndex: =15
+
+    iniKpi1Card As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =110
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =258
+        X: =244
+        Y: =88
+        ZIndex: =16
+
+    iniKpi1Barra As rectangle:
+        BorderThickness: =0
+        Fill: =ColorTextoSuave
+        Height: =82
+        RadiusBottomLeft: =2
+        RadiusBottomRight: =2
+        RadiusTopLeft: =2
+        RadiusTopRight: =2
+        Width: =4
+        X: =244
+        Y: =102
+        ZIndex: =17
+
+    iniKpi1Valor As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =52
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =30
+        Text: =CountRows(Filter(colMisSol, Estado.Value = "Borrador"))
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =264
+        Y: =98
+        ZIndex: =18
+
+    iniKpi1Texto As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: ="Borradores"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =264
+        Y: =158
+        ZIndex: =19
+
+    iniKpi1Click As button:
+        Align: =Align.Center
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =110
+        HoverColor: =Color.White
+        HoverFill: =Color.Transparent
+        OnSelect: =Navigate(MisSolicitudesScreen, ScreenTransition.None)
+        PressedColor: =Color.White
+        PressedFill: =Color.Transparent
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Size: =12
+        Text: =""
+        Width: =258
+        X: =244
+        Y: =88
+        ZIndex: =20
+
+    iniKpi2Card As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =110
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =258
+        X: =524
+        Y: =88
+        ZIndex: =21
+
+    iniKpi2Barra As rectangle:
+        BorderThickness: =0
+        Fill: =ColorAcento
+        Height: =82
+        RadiusBottomLeft: =2
+        RadiusBottomRight: =2
+        RadiusTopLeft: =2
+        RadiusTopRight: =2
+        Width: =4
+        X: =524
+        Y: =102
+        ZIndex: =22
+
+    iniKpi2Valor As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =52
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =30
+        Text: =CountRows(Filter(colMisSol, Estado.Value in ["PendienteJefe", "PendienteFinanzas"]))
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =544
+        Y: =98
+        ZIndex: =23
+
+    iniKpi2Texto As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: ="En trámite"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =544
+        Y: =158
+        ZIndex: =24
+
+    iniKpi2Click As button:
+        Align: =Align.Center
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =110
+        HoverColor: =Color.White
+        HoverFill: =Color.Transparent
+        OnSelect: =Navigate(MisSolicitudesScreen, ScreenTransition.None)
+        PressedColor: =Color.White
+        PressedFill: =Color.Transparent
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Size: =12
+        Text: =""
+        Width: =258
+        X: =524
+        Y: =88
+        ZIndex: =25
+
+    iniKpi3Card As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =110
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =258
+        X: =804
+        Y: =88
+        ZIndex: =26
+
+    iniKpi3Barra As rectangle:
+        BorderThickness: =0
+        Fill: =ColorError
+        Height: =82
+        RadiusBottomLeft: =2
+        RadiusBottomRight: =2
+        RadiusTopLeft: =2
+        RadiusTopRight: =2
+        Width: =4
+        X: =804
+        Y: =102
+        ZIndex: =27
+
+    iniKpi3Valor As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =52
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =30
+        Text: =CountRows(Filter(colMisSol, Estado.Value = "Devuelta"))
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =824
+        Y: =98
+        ZIndex: =28
+
+    iniKpi3Texto As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: ="Devueltas para corregir"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =824
+        Y: =158
+        ZIndex: =29
+
+    iniKpi3Click As button:
+        Align: =Align.Center
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =110
+        HoverColor: =Color.White
+        HoverFill: =Color.Transparent
+        OnSelect: =Navigate(MisSolicitudesScreen, ScreenTransition.None)
+        PressedColor: =Color.White
+        PressedFill: =Color.Transparent
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Size: =12
+        Text: =""
+        Width: =258
+        X: =804
+        Y: =88
+        ZIndex: =30
+
+    iniKpi4Card As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =110
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =258
+        X: =1084
+        Y: =88
+        ZIndex: =31
+
+    iniKpi4Barra As rectangle:
+        BorderThickness: =0
+        Fill: =ColorPrimario
+        Height: =82
+        RadiusBottomLeft: =2
+        RadiusBottomRight: =2
+        RadiusTopLeft: =2
+        RadiusTopRight: =2
+        Width: =4
+        X: =1084
+        Y: =102
+        ZIndex: =32
+
+    iniKpi4Valor As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =52
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =30
+        Text: =If(gblEsAprobador, Text(CountRows(colBandeja)), "-")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =1104
+        Y: =98
+        ZIndex: =33
+
+    iniKpi4Texto As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: ="Por aprobar"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =222
+        Wrap: =false
+        X: =1104
+        Y: =158
+        ZIndex: =34
+
+    iniKpi4Click As button:
+        Align: =Align.Center
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =110
+        HoverColor: =Color.White
+        HoverFill: =Color.Transparent
+        OnSelect: =If(gblEsAprobador, Navigate(BandejaScreen, ScreenTransition.None))
+        PressedColor: =Color.White
+        PressedFill: =Color.Transparent
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Size: =12
+        Text: =""
+        Width: =258
+        X: =1084
+        Y: =88
+        ZIndex: =35
+
+    iniListaCard As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =522
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =718
+        X: =244
+        Y: =222
+        ZIndex: =36
+
+    iniListaTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =32
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =15
+        Text: ="Mis últimas solicitudes"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =400
+        Wrap: =true
+        X: =264
+        Y: =234
+        ZIndex: =37
+
+    iniGalUltimas As gallery.galleryVertical:
+        BorderThickness: =0
+        Fill: =Color.Transparent
+        Height: =460
+        Items: =FirstN(Sort(colMisSol, ID, SortOrder.Descending), 8)
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        OnSelect: |-
+            =Set(gblSelId, iniGalUltimas.Selected.ID);
+            Navigate(DetalleSolicitudScreen, ScreenTransition.None)
+        ShowScrollbar: =true
+        TemplateFill: =Color.Transparent
+        TemplatePadding: =0
+        TemplateSize: =58
+        Width: =678
+        WrapCount: =1
+        X: =264
+        Y: =272
+        ZIndex: =38
+
+        iniRowNo As label:
+            Align: =Align.Left
+            Color: =ColorOscuro
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =24
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =13
+            Text: =ThisItem.Title
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =200
+            Wrap: =false
+            X: =20
+            Y: =8
+            ZIndex: =1
+
+        iniRowMotivo As label:
+            Align: =Align.Left
+            Color: =ColorTextoSuave
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Height: =22
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: =ThisItem.Motivo
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =330
+            Wrap: =false
+            X: =20
+            Y: =32
+            ZIndex: =2
+
+        iniRowMonto As label:
+            Align: =Align.Right
+            Color: =ColorOscuro
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =46
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =13
+            Text: |-
+                ="$" & Text(ThisItem.MontoTotal, "#,##0")
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =140
+            Wrap: =false
+            X: =370
+            Y: =8
+            ZIndex: =3
+
+        iniRowEstFondo As rectangle:
+            BorderThickness: =0
+            Fill: =LookUp(EstadosMeta, Raw = ThisItem.Estado.Value).Fondo
+            Height: =24
+            RadiusBottomLeft: =12
+            RadiusBottomRight: =12
+            RadiusTopLeft: =12
+            RadiusTopRight: =12
+            Width: =150
+            X: =530
+            Y: =17
+            ZIndex: =4
+
+        iniRowEstTexto As label:
+            Align: =Align.Center
+            Color: =LookUp(EstadosMeta, Raw = ThisItem.Estado.Value).Letra
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =24
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: =LookUp(EstadosMeta, Raw = ThisItem.Estado.Value).Texto
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =150
+            Wrap: =false
+            X: =530
+            Y: =17
+            ZIndex: =5
+
+        iniRowSep As rectangle:
+            BorderThickness: =0
+            Fill: =ColorBorde
+            Height: =1
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =678
+            X: =0
+            Y: =57
+            ZIndex: =6
+
+    iniAccCard As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =522
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =356
+        X: =986
+        Y: =222
+        ZIndex: =39
+
+    iniAccTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =32
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =15
+        Text: ="Acciones rápidas"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =300
+        Wrap: =true
+        X: =1006
+        Y: =234
+        ZIndex: =40
+
+    iniAccNueva As button:
+        Align: =Align.Center
+        BorderColor: =ColorPrimario
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =ColorPrimario
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =48
+        HoverColor: =Color.White
+        HoverFill: =ColorPrimario
+        OnSelect: |-
+            =Set(gblEditId, 0);
+            Set(gblEditNo, "");
+            Navigate(NuevaSolicitudScreen, ScreenTransition.None)
+        PressedColor: =Color.White
+        PressedFill: =ColorPrimario
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Nueva solicitud"
+        Width: =316
+        X: =1006
+        Y: =284
+        ZIndex: =41
+
+    iniAccMis As button:
+        Align: =Align.Center
+        BorderColor: =ColorPrimario
+        BorderThickness: =1
+        Color: =ColorPrimario
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =48
+        HoverColor: =ColorPrimario
+        HoverFill: =ColorPrimarioClaro
+        OnSelect: =Navigate(MisSolicitudesScreen, ScreenTransition.None)
+        PressedColor: =ColorPrimario
+        PressedFill: =ColorPrimarioClaro
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Ver mis solicitudes"
+        Width: =316
+        X: =1006
+        Y: =344
+        ZIndex: =42
+
+    iniAccBandeja As button:
+        Align: =Align.Center
+        BorderColor: =ColorPrimario
+        BorderThickness: =1
+        Color: =ColorPrimario
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =48
+        HoverColor: =ColorPrimario
+        HoverFill: =ColorPrimarioClaro
+        OnSelect: =Navigate(BandejaScreen, ScreenTransition.None)
+        PressedColor: =ColorPrimario
+        PressedFill: =ColorPrimarioClaro
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Ir a la bandeja de aprobación"
+        Visible: =gblEsAprobador
+        Width: =316
+        X: =1006
+        Y: =404
+        ZIndex: =43
+
+    iniAccNota As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =80
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: |-
+            ="Rol actual: " & gblRol & Char(10) & "Las solicitudes desde " & Text(gblUmbral, "#,##0") & " pasan también por Finanzas."
+        VerticalAlign: =VerticalAlign.Top
+        Width: =316
+        Wrap: =true
+        X: =1006
+        Y: =480
+        ZIndex: =44

@@ -1,0 +1,86 @@
+App As appinfo:
+    BackEnabled: =true
+    Formulas: |-
+        =ColorPrimario = ColorValue("#0F766E");
+        ColorPrimarioClaro = ColorValue("#CCFBF1");
+        ColorOscuro = ColorValue("#1E293B");
+        ColorFondo = ColorValue("#F1F5F9");
+        ColorTarjeta = Color.White;
+        ColorTexto = ColorValue("#334155");
+        ColorTextoSuave = ColorValue("#64748B");
+        ColorBorde = ColorValue("#E2E8F0");
+        ColorAcento = ColorValue("#F59E0B");
+        ColorExito = ColorValue("#16A34A");
+        ColorError = ColorValue("#DC2626");
+        ColorInfo = ColorValue("#0284C7");
+        ColorSidebarTexto = ColorValue("#CBD5E1");
+        ColorSidebarSuave = ColorValue("#94A3B8");
+        ColorSidebarHover = ColorValue("#334155");
+        UsuarioActual = {
+            '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+            Claims: "i:0#.f|membership|" & Lower(User().Email),
+            DisplayName: User().FullName,
+            Email: User().Email,
+            Department: "",
+            JobTitle: "",
+            Picture: ""
+        };
+        EstadosMeta = Table(
+            {Raw: "Borrador", Texto: "Borrador", Fondo: ColorValue("#E2E8F0"), Letra: ColorValue("#475569")},
+            {Raw: "PendienteJefe", Texto: "Pendiente jefe", Fondo: ColorValue("#FEF3C7"), Letra: ColorValue("#92400E")},
+            {Raw: "PendienteFinanzas", Texto: "Pendiente Finanzas", Fondo: ColorValue("#FEF3C7"), Letra: ColorValue("#92400E")},
+            {Raw: "Aprobada", Texto: "Aprobada", Fondo: ColorValue("#DCFCE7"), Letra: ColorValue("#166534")},
+            {Raw: "Devuelta", Texto: "Devuelta", Fondo: ColorValue("#FFEDD5"), Letra: ColorValue("#9A3412")},
+            {Raw: "Rechazada", Texto: "Rechazada", Fondo: ColorValue("#FEE2E2"), Letra: ColorValue("#991B1B")},
+            {Raw: "Pagada", Texto: "Pagada", Fondo: ColorValue("#CCFBF1"), Letra: ColorValue("#115E59")}
+        );
+        EstadosFiltro = Table(
+            {Value: "Todos", Raw: "Todos"},
+            {Value: "Borrador", Raw: "Borrador"},
+            {Value: "Pendiente jefe", Raw: "PendienteJefe"},
+            {Value: "Pendiente Finanzas", Raw: "PendienteFinanzas"},
+            {Value: "Aprobada", Raw: "Aprobada"},
+            {Value: "Devuelta", Raw: "Devuelta"},
+            {Value: "Rechazada", Raw: "Rechazada"},
+            {Value: "Pagada", Raw: "Pagada"}
+        );
+    OnStart: |-
+        =Set(gblUserEmail, Lower(User().Email));
+        Set(gblUser, LookUp(UsuariosRolLST, UsuarioEmail = gblUserEmail));
+        Set(gblRol, Coalesce(gblUser.Rol.Value, "Solicitante"));
+        Set(gblNombre, Coalesce(gblUser.Title, User().FullName));
+        Set(gblEsAprobador, gblRol in ["Aprobador", "Finanzas", "Administrador"]);
+        Set(gblEsFinanzas, gblRol in ["Finanzas", "Administrador"]);
+        Set(gblEditId, 0);
+        Set(gblEditNo, "");
+        Concurrent(
+            ClearCollect(
+                colCentros,
+                ForAll(
+                    Filter(CentrosCostoLST, Activo = true),
+                    {Value: Title & " - " & Nombre, Cod: Title, Id: ID}
+                )
+            ),
+            ClearCollect(
+                colCategorias,
+                ForAll(
+                    Filter(CategoriasGastoLST, Activo = true),
+                    {Value: Title, Id: ID, Limite: LimiteMonto, Recibo: RequiereRecibo}
+                )
+            ),
+            ClearCollect(colParametros, ParametrosLST)
+        );
+        Set(gblUmbral, Coalesce(Value(LookUp(colParametros, Title = "UmbralFinanzas").Valor), 1000000));
+        Set(gblDiasMax, Coalesce(Value(LookUp(colParametros, Title = "DiasMaxAntiguedad").Valor), 60));
+        Set(gblDiasAlerta, Coalesce(Value(LookUp(colParametros, Title = "DiasAlertaPendiente").Valor), 3));
+        If(!IsBlank(Param("ID")), Set(gblSelId, Value(Param("ID"))))
+    StartScreen: =If(!IsBlank(Param("ID")), DetalleSolicitudScreen, InicioScreen)
+    Theme: =PowerAppsTheme
+
+    Host As hostControl.DefaultHostControlVariant:
+        OnCancel: =false
+        OnEdit: =false
+        OnNew: =false
+        OnSave: =false
+        OnView: =false
+

@@ -1,0 +1,1475 @@
+NuevaSolicitudScreen As screen:
+    Fill: =ColorFondo
+    OnVisible: |-
+        =Clear(colGastosNuevo);
+        UpdateContext({ctxMsg: "", ctxGuardando: false});
+        If(
+            gblEditId > 0,
+            Set(gblEdit, LookUp(SolicitudesLST, ID = gblEditId));
+            ClearCollect(
+                colGastosNuevo,
+                ForAll(
+                    Filter(GastosLST, Title = gblEditNo),
+                    {
+                        Cat: CategoriaNombre,
+                        CatId: Categoria.Id,
+                        Prov: Proveedor,
+                        Desc: Descripcion,
+                        Recibo: NumeroRecibo,
+                        Fecha: FechaGasto,
+                        Monto: Monto
+                    }
+                )
+            ),
+            Set(gblEdit, Blank())
+        );
+        Reset(nuevaCentro);
+        Reset(nuevaMotivo);
+        Reset(nuevaFechaGasto);
+        Reset(nuevaProveedor);
+        Reset(nuevaDescripcion);
+        Reset(nuevaRecibo);
+        Reset(nuevaMonto)
+
+    nuevaSidebarBg As rectangle:
+        BorderThickness: =0
+        Fill: =ColorOscuro
+        Height: =768
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =220
+        X: =0
+        Y: =0
+        ZIndex: =1
+
+    nuevaAppNombre As label:
+        Align: =Align.Left
+        Color: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =32
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =22
+        Text: ="Reembolsa"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =172
+        Wrap: =true
+        X: =24
+        Y: =22
+        ZIndex: =2
+
+    nuevaAppLema As label:
+        Align: =Align.Left
+        Color: =ColorSidebarSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Gestión de gastos"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =172
+        Wrap: =true
+        X: =24
+        Y: =54
+        ZIndex: =3
+
+    nuevaNav0 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(InicioScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Inicio"
+        Visible: =true
+        Width: =200
+        X: =10
+        Y: =110
+        ZIndex: =4
+
+    nuevaNav1 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(MisSolicitudesScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Mis solicitudes"
+        Visible: =true
+        Width: =200
+        X: =10
+        Y: =162
+        ZIndex: =5
+
+    nuevaNav2 As button:
+        Align: =Align.Left
+        BorderColor: =ColorPrimario
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =ColorPrimario
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =44
+        HoverColor: =Color.White
+        HoverFill: =ColorPrimario
+        OnSelect: |-
+            =Set(gblEditId, 0);
+            Set(gblEditNo, "");
+            Navigate(NuevaSolicitudScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =Color.White
+        PressedFill: =ColorPrimario
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Nueva solicitud"
+        Visible: =true
+        Width: =200
+        X: =10
+        Y: =214
+        ZIndex: =6
+
+    nuevaNav3 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(BandejaScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Bandeja de aprobación"
+        Visible: =gblEsAprobador
+        Width: =200
+        X: =10
+        Y: =266
+        ZIndex: =7
+
+    nuevaNav4 As button:
+        Align: =Align.Left
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorSidebarTexto
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =44
+        HoverColor: =ColorSidebarTexto
+        HoverFill: =ColorSidebarHover
+        OnSelect: =Navigate(ReportesScreen, ScreenTransition.None)
+        PaddingLeft: =16
+        PressedColor: =ColorSidebarTexto
+        PressedFill: =ColorSidebarHover
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Reportes"
+        Visible: =gblEsFinanzas
+        Width: =200
+        X: =10
+        Y: =318
+        ZIndex: =8
+
+    nuevaSidebarLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorSidebarHover
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =188
+        X: =16
+        Y: =680
+        ZIndex: =9
+
+    nuevaUsuarioNombre As label:
+        Align: =Align.Left
+        Color: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =22
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =gblNombre
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =180
+        Wrap: =false
+        X: =24
+        Y: =690
+        ZIndex: =10
+
+    nuevaUsuarioRol As label:
+        Align: =Align.Left
+        Color: =ColorSidebarSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: =gblRol
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =180
+        Wrap: =false
+        X: =24
+        Y: =712
+        ZIndex: =11
+
+    nuevaHeaderBg As rectangle:
+        BorderThickness: =0
+        Fill: =Color.White
+        Height: =64
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =1146
+        X: =220
+        Y: =0
+        ZIndex: =12
+
+    nuevaHeaderLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =1146
+        X: =220
+        Y: =63
+        ZIndex: =13
+
+    nuevaTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =64
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =22
+        Text: ="Solicitud de reembolso"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =700
+        Wrap: =true
+        X: =244
+        Y: =0
+        ZIndex: =14
+
+    nuevaFecha As label:
+        Align: =Align.Right
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =64
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =Text(Today(), "dd/mm/yyyy")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =300
+        Wrap: =true
+        X: =1042
+        Y: =0
+        ZIndex: =15
+
+    nuevaFormCard As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =656
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =520
+        X: =244
+        Y: =88
+        ZIndex: =16
+
+    nuevaFormTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =30
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =15
+        Text: =If(gblEditId > 0, "Editar " & gblEditNo, "Datos de la solicitud")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =480
+        Wrap: =true
+        X: =264
+        Y: =100
+        ZIndex: =17
+
+    nuevaLblCentro As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Centro de costo"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =480
+        Wrap: =true
+        X: =264
+        Y: =140
+        ZIndex: =18
+
+    nuevaCentro As dropdown:
+        BorderColor: =ColorBorde
+        BorderThickness: =1
+        ChevronBackground: =ColorPrimario
+        ChevronFill: =Color.White
+        Color: =ColorTexto
+        Default: =LookUp(colCentros, Cod = If(gblEditId > 0, gblEdit.CentroCosto.Value, gblUser.CentroCosto.Value)).Value
+        Fill: =Color.White
+        Font: =Font.'Open Sans'
+        Height: =38
+        HoverColor: =ColorTexto
+        HoverFill: =ColorFondo
+        Items: =colCentros
+        SelectionColor: =Color.White
+        SelectionFill: =ColorPrimario
+        Size: =12
+        Width: =480
+        X: =264
+        Y: =162
+        ZIndex: =19
+
+    nuevaLblMotivo As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Motivo"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =480
+        Wrap: =true
+        X: =264
+        Y: =208
+        ZIndex: =20
+
+    nuevaMotivo As text:
+        BorderColor: =ColorBorde
+        BorderThickness: =1
+        Color: =ColorTexto
+        Default: =If(gblEditId > 0, gblEdit.Motivo, "")
+        Fill: =Color.White
+        FocusedBorderColor: =ColorPrimario
+        Font: =Font.'Open Sans'
+        Height: =76
+        HintText: ="Describe el motivo del gasto"
+        HoverBorderColor: =ColorPrimario
+        Mode: =TextMode.MultiLine
+        PressedBorderColor: =ColorPrimario
+        RadiusBottomLeft: =6
+        RadiusBottomRight: =6
+        RadiusTopLeft: =6
+        RadiusTopRight: =6
+        Size: =12
+        Width: =480
+        X: =264
+        Y: =230
+        ZIndex: =21
+
+    nuevaSep1 As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =480
+        X: =264
+        Y: =322
+        ZIndex: =22
+
+    nuevaLblAgregar As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =28
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =14
+        Text: ="Agregar gasto"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =480
+        Wrap: =true
+        X: =264
+        Y: =332
+        ZIndex: =23
+
+    nuevaLblCat As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Categoría"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =230
+        Wrap: =true
+        X: =264
+        Y: =364
+        ZIndex: =24
+
+    nuevaCategoria As dropdown:
+        BorderColor: =ColorBorde
+        BorderThickness: =1
+        ChevronBackground: =ColorPrimario
+        ChevronFill: =Color.White
+        Color: =ColorTexto
+        Fill: =Color.White
+        Font: =Font.'Open Sans'
+        Height: =36
+        HoverColor: =ColorTexto
+        HoverFill: =ColorFondo
+        Items: =colCategorias
+        SelectionColor: =Color.White
+        SelectionFill: =ColorPrimario
+        Size: =12
+        Width: =230
+        X: =264
+        Y: =386
+        ZIndex: =25
+
+    nuevaLblFecha As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Fecha del gasto"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =230
+        Wrap: =true
+        X: =514
+        Y: =364
+        ZIndex: =26
+
+    nuevaFechaGasto As datepicker:
+        BorderColor: =ColorBorde
+        BorderThickness: =1
+        Color: =ColorTexto
+        DefaultDate: =Today()
+        EndYear: =Year(Today())
+        Fill: =Color.White
+        Font: =Font.'Open Sans'
+        Height: =36
+        IconBackground: =ColorPrimario
+        IconFill: =Color.White
+        Size: =12
+        StartYear: =Year(Today()) - 2
+        Width: =230
+        X: =514
+        Y: =386
+        ZIndex: =27
+
+    nuevaLblProv As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Proveedor"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =230
+        Wrap: =true
+        X: =264
+        Y: =430
+        ZIndex: =28
+
+    nuevaProveedor As text:
+        BorderColor: =ColorBorde
+        BorderThickness: =1
+        Color: =ColorTexto
+        Default: =""
+        Fill: =Color.White
+        FocusedBorderColor: =ColorPrimario
+        Font: =Font.'Open Sans'
+        Height: =36
+        HintText: =""
+        HoverBorderColor: =ColorPrimario
+        PressedBorderColor: =ColorPrimario
+        RadiusBottomLeft: =6
+        RadiusBottomRight: =6
+        RadiusTopLeft: =6
+        RadiusTopRight: =6
+        Size: =12
+        Width: =230
+        X: =264
+        Y: =452
+        ZIndex: =29
+
+    nuevaLblRecibo As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Nº de recibo"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =230
+        Wrap: =true
+        X: =514
+        Y: =430
+        ZIndex: =30
+
+    nuevaRecibo As text:
+        BorderColor: =ColorBorde
+        BorderThickness: =1
+        Color: =ColorTexto
+        Default: =""
+        Fill: =Color.White
+        FocusedBorderColor: =ColorPrimario
+        Font: =Font.'Open Sans'
+        Height: =36
+        HintText: =""
+        HoverBorderColor: =ColorPrimario
+        PressedBorderColor: =ColorPrimario
+        RadiusBottomLeft: =6
+        RadiusBottomRight: =6
+        RadiusTopLeft: =6
+        RadiusTopRight: =6
+        Size: =12
+        Width: =230
+        X: =514
+        Y: =452
+        ZIndex: =31
+
+    nuevaLblDesc As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Descripción"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =480
+        Wrap: =true
+        X: =264
+        Y: =496
+        ZIndex: =32
+
+    nuevaDescripcion As text:
+        BorderColor: =ColorBorde
+        BorderThickness: =1
+        Color: =ColorTexto
+        Default: =""
+        Fill: =Color.White
+        FocusedBorderColor: =ColorPrimario
+        Font: =Font.'Open Sans'
+        Height: =36
+        HintText: =""
+        HoverBorderColor: =ColorPrimario
+        PressedBorderColor: =ColorPrimario
+        RadiusBottomLeft: =6
+        RadiusBottomRight: =6
+        RadiusTopLeft: =6
+        RadiusTopRight: =6
+        Size: =12
+        Width: =480
+        X: =264
+        Y: =518
+        ZIndex: =33
+
+    nuevaLblMonto As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =20
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: ="Monto (COP)"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =230
+        Wrap: =true
+        X: =264
+        Y: =562
+        ZIndex: =34
+
+    nuevaMonto As text:
+        BorderColor: =ColorBorde
+        BorderThickness: =1
+        Color: =ColorTexto
+        Default: =""
+        Fill: =Color.White
+        FocusedBorderColor: =ColorPrimario
+        Font: =Font.'Open Sans'
+        Format: =TextFormat.Number
+        Height: =36
+        HintText: =""
+        HoverBorderColor: =ColorPrimario
+        PressedBorderColor: =ColorPrimario
+        RadiusBottomLeft: =6
+        RadiusBottomRight: =6
+        RadiusTopLeft: =6
+        RadiusTopRight: =6
+        Size: =12
+        Width: =230
+        X: =264
+        Y: =584
+        ZIndex: =35
+
+    nuevaAgregar As button:
+        Align: =Align.Center
+        BorderColor: =ColorPrimario
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =ColorPrimario
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =36
+        HoverColor: =Color.White
+        HoverFill: =ColorPrimario
+        OnSelect: |-
+            =UpdateContext({ctxMsg: ""});
+            With(
+                {
+                    _monto: IfError(Value(nuevaMonto.Text), 0),
+                    _cat: nuevaCategoria.Selected,
+                    _fecha: nuevaFechaGasto.SelectedDate
+                },
+                If(
+                    IsBlank(_cat),
+                    UpdateContext({ctxMsg: "Selecciona una categoría."}),
+                    _monto <= 0,
+                    UpdateContext({ctxMsg: "Ingresa un monto mayor que cero."}),
+                    _fecha > Today(),
+                    UpdateContext({ctxMsg: "La fecha del gasto no puede ser futura."}),
+                    _fecha < DateAdd(Today(), -gblDiasMax, TimeUnit.Days),
+                    UpdateContext({ctxMsg: "El gasto supera la antigüedad máxima de " & gblDiasMax & " días."}),
+                    !IsBlank(_cat.Limite) && _monto > _cat.Limite,
+                    UpdateContext({ctxMsg: "El monto supera el límite de la categoría (" & Text(_cat.Limite, "#,##0") & ")."}),
+                    _cat.Recibo && IsBlank(Trim(nuevaRecibo.Text)),
+                    UpdateContext({ctxMsg: "Esta categoría requiere número de recibo."}),
+                    Collect(
+                        colGastosNuevo,
+                        {
+                            Cat: _cat.Value,
+                            CatId: _cat.Id,
+                            Prov: Trim(nuevaProveedor.Text),
+                            Desc: Trim(nuevaDescripcion.Text),
+                            Recibo: Trim(nuevaRecibo.Text),
+                            Fecha: _fecha,
+                            Monto: _monto
+                        }
+                    );
+                    Reset(nuevaProveedor);
+                    Reset(nuevaDescripcion);
+                    Reset(nuevaRecibo);
+                    Reset(nuevaMonto)
+                )
+            )
+        PressedColor: =Color.White
+        PressedFill: =ColorPrimario
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="+ Agregar gasto"
+        Width: =230
+        X: =514
+        Y: =584
+        ZIndex: =36
+
+    nuevaMsg As label:
+        Align: =Align.Left
+        Color: =ColorError
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =96
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =12
+        Text: =ctxMsg
+        VerticalAlign: =VerticalAlign.Top
+        Visible: =!IsBlank(ctxMsg)
+        Width: =480
+        Wrap: =true
+        X: =264
+        Y: =632
+        ZIndex: =37
+
+    nuevaListaCard As rectangle:
+        BorderColor: =ColorBorde
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =ColorTarjeta
+        Height: =656
+        RadiusBottomLeft: =10
+        RadiusBottomRight: =10
+        RadiusTopLeft: =10
+        RadiusTopRight: =10
+        Width: =556
+        X: =786
+        Y: =88
+        ZIndex: =38
+
+    nuevaListaTitulo As label:
+        Align: =Align.Left
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =30
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =15
+        Text: ="Gastos de la solicitud (" & CountRows(colGastosNuevo) & ")"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =400
+        Wrap: =true
+        X: =806
+        Y: =100
+        ZIndex: =39
+
+    nuevaListaLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =556
+        X: =786
+        Y: =140
+        ZIndex: =40
+
+    nuevaGal As gallery.galleryVertical:
+        BorderThickness: =0
+        Fill: =Color.Transparent
+        Height: =340
+        Items: =colGastosNuevo
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        ShowScrollbar: =true
+        TemplateFill: =Color.Transparent
+        TemplatePadding: =0
+        TemplateSize: =56
+        Width: =556
+        WrapCount: =1
+        X: =786
+        Y: =142
+        ZIndex: =41
+
+        nuevaRowCat As label:
+            Align: =Align.Left
+            Color: =ColorOscuro
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =22
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =12
+            Text: =ThisItem.Cat
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =220
+            Wrap: =false
+            X: =20
+            Y: =6
+            ZIndex: =1
+
+        nuevaRowProv As label:
+            Align: =Align.Left
+            Color: =ColorTextoSuave
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Height: =20
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: =ThisItem.Prov & If(!IsBlank(ThisItem.Recibo), " - " & ThisItem.Recibo, "")
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =280
+            Wrap: =false
+            X: =20
+            Y: =28
+            ZIndex: =2
+
+        nuevaRowFecha As label:
+            Align: =Align.Left
+            Color: =ColorTexto
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Height: =56
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: =Text(ThisItem.Fecha, "dd/mm/yyyy")
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =90
+            Wrap: =false
+            X: =310
+            Y: =0
+            ZIndex: =3
+
+        nuevaRowMonto As label:
+            Align: =Align.Right
+            Color: =ColorOscuro
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =56
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =12
+            Text: |-
+                ="$" & Text(ThisItem.Monto, "#,##0")
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =100
+            Wrap: =false
+            X: =400
+            Y: =0
+            ZIndex: =4
+
+        nuevaRowQuitar As icon.Cancel:
+            Color: =ColorError
+            Height: =24
+            Icon: =Icon.Cancel
+            OnSelect: =Remove(colGastosNuevo, ThisItem)
+            PaddingBottom: =4
+            PaddingLeft: =4
+            PaddingRight: =4
+            PaddingTop: =4
+            Width: =24
+            X: =508
+            Y: =16
+            ZIndex: =5
+
+        nuevaRowSep As rectangle:
+            BorderThickness: =0
+            Fill: =ColorBorde
+            Height: =1
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =556
+            X: =0
+            Y: =55
+            ZIndex: =6
+
+    nuevaTotalLinea As rectangle:
+        BorderThickness: =0
+        Fill: =ColorBorde
+        Height: =1
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =556
+        X: =786
+        Y: =486
+        ZIndex: =42
+
+    nuevaTotalLbl As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =32
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =14
+        Text: ="Total"
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =200
+        Wrap: =true
+        X: =806
+        Y: =494
+        ZIndex: =43
+
+    nuevaTotal As label:
+        Align: =Align.Right
+        Color: =ColorOscuro
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Bold
+        Height: =32
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =20
+        Text: |-
+            ="$" & Text(Sum(colGastosNuevo, Monto), "#,##0")
+        VerticalAlign: =VerticalAlign.Middle
+        Width: =300
+        Wrap: =true
+        X: =1022
+        Y: =494
+        ZIndex: =44
+
+    nuevaNota As label:
+        Align: =Align.Left
+        Color: =ColorTextoSuave
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =40
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Size: =11
+        Text: |-
+            =If(Sum(colGastosNuevo, Monto) >= gblUmbral, "Este monto requiere también la aprobación de Finanzas.", "Desde " & Text(gblUmbral, "#,##0") & " la solicitud pasa también por Finanzas.")
+        VerticalAlign: =VerticalAlign.Top
+        Width: =516
+        Wrap: =true
+        X: =806
+        Y: =532
+        ZIndex: =45
+
+    nuevaBorrador As button:
+        Align: =Align.Center
+        BorderColor: =ColorPrimario
+        BorderThickness: =1
+        Color: =ColorPrimario
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        DisplayMode: =If(ctxGuardando, DisplayMode.Disabled, DisplayMode.Edit)
+        Fill: =Color.White
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =44
+        HoverColor: =ColorPrimario
+        HoverFill: =ColorPrimarioClaro
+        OnSelect: |-
+            =UpdateContext({ctxMsg: ""});
+            If(
+                IsBlank(nuevaCentro.Selected) || CountRows(colGastosNuevo) = 0,
+                UpdateContext({ctxMsg: "Selecciona el centro de costo y agrega al menos un gasto."}),
+                UpdateContext({ctxGuardando: true, ctxFallo: false});
+                Set(gblTotal, Sum(colGastosNuevo, Monto));
+                Set(gblEstadoNuevo, If(gblEditId > 0, gblEdit.Estado.Value, "Borrador"));
+                Set(gblNivelNuevo, Switch(gblEstadoNuevo, "PendienteJefe", 1, "PendienteFinanzas", 2, 0));
+                Set(gblAprobNuevo, If(gblEstadoNuevo = "PendienteJefe", Lower(gblUser.JefeEmail), ""));
+                If(
+                    gblEditId = 0,
+                    Set(gblTipoConsec, "REM-" & Text(Year(Today()), "0"));
+                    Refresh(ConsecutivoLST);
+                    Set(gblContador, LookUp(ConsecutivoLST, Tipo = gblTipoConsec));
+                    Set(gblN, Coalesce(Value(gblContador.Valor), 0) + 1);
+                    Set(
+                        gblReservaOK,
+                        !IsBlank(
+                            IfError(
+                                If(
+                                    IsBlank(gblContador),
+                                    Patch(ConsecutivoLST, Defaults(ConsecutivoLST), {Title: gblTipoConsec, Tipo: gblTipoConsec, Valor: Text(gblN)}),
+                                    Patch(ConsecutivoLST, gblContador, {Valor: Text(gblN)})
+                                ),
+                                Blank()
+                            )
+                        )
+                    );
+                    If(
+                        !gblReservaOK,
+                        Notify("Otra persona está creando una solicitud en este momento. No se creó nada. Intenta de nuevo.", NotificationType.Warning);
+                        UpdateContext({ctxFallo: true}),
+                        Set(gblNoGuardar, gblTipoConsec & "-" & Text(gblN, "00000"));
+                        Set(
+                            gblHdr,
+                            IfError(
+                                Patch(
+                                    SolicitudesLST,
+                                    Defaults(SolicitudesLST),
+                                    {
+                                        Title: gblNoGuardar,
+                                        Solicitante: UsuarioActual,
+                                        SolicitanteEmail: gblUserEmail,
+                                        CentroCosto: {Id: nuevaCentro.Selected.Id, Value: nuevaCentro.Selected.Cod},
+                                        CentroCostoCod: nuevaCentro.Selected.Cod,
+                                        Motivo: Trim(nuevaMotivo.Text),
+                                        FechaSolicitud: Today(),
+                                        MontoTotal: gblTotal,
+                                        Estado: {Value: gblEstadoNuevo},
+                                        NivelActual: gblNivelNuevo,
+                                        AprobadorEmail: gblAprobNuevo,
+                                        RequiereFinanzas: gblTotal >= gblUmbral,
+                                        FechaEnvio: Blank()
+                                    }
+                                ),
+                                Blank()
+                            )
+                        );
+                        If(
+                            IsBlank(gblHdr),
+                            Notify("No se pudo crear la solicitud. Intenta de nuevo.", NotificationType.Error);
+                            UpdateContext({ctxFallo: true})
+                        )
+                    ),
+                    Set(gblNoGuardar, gblEditNo);
+                    Set(gblHdr, gblEdit)
+                );
+                If(
+                    !ctxFallo,
+                    ClearCollect(colOld, Filter(GastosLST, Title = gblNoGuardar));
+                    Clear(colCreados);
+                    IfError(
+                        ForAll(
+                            colGastosNuevo As G,
+                            Collect(
+                                colCreados,
+                                Patch(
+                                    GastosLST,
+                                    Defaults(GastosLST),
+                                    {
+                                        Title: gblNoGuardar,
+                                        Solicitud: {Id: gblHdr.ID, Value: gblNoGuardar},
+                                        Categoria: {Id: G.CatId, Value: G.Cat},
+                                        CategoriaNombre: G.Cat,
+                                        FechaGasto: G.Fecha,
+                                        Proveedor: G.Prov,
+                                        Descripcion: G.Desc,
+                                        Monto: G.Monto,
+                                        NumeroRecibo: G.Recibo
+                                    }
+                                )
+                            )
+                        );
+                        true,
+                        UpdateContext({ctxFallo: true})
+                    );
+                    If(
+                        !ctxFallo && gblEditId > 0,
+                        Set(
+                            gblHdr2,
+                            IfError(
+                                Patch(
+                                    SolicitudesLST,
+                                    gblEdit,
+                                    {
+                                        CentroCosto: {Id: nuevaCentro.Selected.Id, Value: nuevaCentro.Selected.Cod},
+                                        CentroCostoCod: nuevaCentro.Selected.Cod,
+                                        Motivo: Trim(nuevaMotivo.Text),
+                                        MontoTotal: gblTotal,
+                                        Estado: {Value: gblEstadoNuevo},
+                                        NivelActual: gblNivelNuevo,
+                                        AprobadorEmail: gblAprobNuevo,
+                                        RequiereFinanzas: gblTotal >= gblUmbral,
+                                        FechaEnvio: gblEdit.FechaEnvio
+                                    }
+                                ),
+                                Blank()
+                            )
+                        );
+                        If(IsBlank(gblHdr2), UpdateContext({ctxFallo: true}))
+                    );
+                    If(
+                        ctxFallo,
+                        ForAll(colCreados As C, Remove(GastosLST, C));
+                        If(gblEditId = 0, Remove(SolicitudesLST, gblHdr));
+                        Notify("No se pudo guardar la solicitud. No se aplicó ningún cambio. Intenta de nuevo.", NotificationType.Error),
+                        ForAll(colOld As O, Remove(GastosLST, O));
+                        If(gblEditId = 0, IfError(
+                            Patch(
+                                BitacoraLST,
+                                Defaults(BitacoraLST),
+                                {
+                                    Title: gblNoGuardar,
+                                    Solicitud: {Id: gblHdr.ID, Value: gblNoGuardar},
+                                    Accion: {Value: "Creada"},
+                                    Nivel: 0,
+                                    Actor: UsuarioActual,
+                                    ActorEmail: gblUserEmail,
+                                    EstadoAnterior: "",
+                                    EstadoNuevo: "Borrador",
+                                    Comentario: "",
+                                    FechaAccion: Now()
+                                }
+                            );
+                            true,
+                            Notify("El cambio se guardó, pero no se pudo escribir en la bitácora.", NotificationType.Warning)
+                        ));
+                        Set(gblSelId, gblHdr.ID);
+                        UpdateContext({ctxGuardando: false});
+                        Notify("Borrador guardado.", NotificationType.Success);
+                        Navigate(DetalleSolicitudScreen, ScreenTransition.None)
+                    )
+                );
+                If(ctxFallo, UpdateContext({ctxGuardando: false}))
+            )
+        PressedColor: =ColorPrimario
+        PressedFill: =ColorPrimarioClaro
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Guardar borrador"
+        Width: =240
+        X: =806
+        Y: =596
+        ZIndex: =46
+
+    nuevaEnviar As button:
+        Align: =Align.Center
+        BorderColor: =ColorPrimario
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        DisplayMode: =If(ctxGuardando, DisplayMode.Disabled, DisplayMode.Edit)
+        Fill: =ColorPrimario
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Semibold
+        Height: =44
+        HoverColor: =Color.White
+        HoverFill: =ColorPrimario
+        OnSelect: |-
+            =UpdateContext({ctxMsg: ""});
+            If(
+                IsBlank(nuevaCentro.Selected) || CountRows(colGastosNuevo) = 0 || IsBlank(Trim(nuevaMotivo.Text)),
+                UpdateContext({ctxMsg: "Completa el centro de costo, el motivo y agrega al menos un gasto."}),
+                UpdateContext({ctxGuardando: true, ctxFallo: false});
+                Set(gblTotal, Sum(colGastosNuevo, Monto));
+                Set(gblEstadoNuevo, If(IsBlank(gblUser.JefeEmail) || Lower(gblUser.JefeEmail) = gblUserEmail, "PendienteFinanzas", "PendienteJefe"));
+                Set(gblNivelNuevo, Switch(gblEstadoNuevo, "PendienteJefe", 1, "PendienteFinanzas", 2, 0));
+                Set(gblAprobNuevo, If(gblEstadoNuevo = "PendienteJefe", Lower(gblUser.JefeEmail), ""));
+                If(
+                    gblEditId = 0,
+                    Set(gblTipoConsec, "REM-" & Text(Year(Today()), "0"));
+                    Refresh(ConsecutivoLST);
+                    Set(gblContador, LookUp(ConsecutivoLST, Tipo = gblTipoConsec));
+                    Set(gblN, Coalesce(Value(gblContador.Valor), 0) + 1);
+                    Set(
+                        gblReservaOK,
+                        !IsBlank(
+                            IfError(
+                                If(
+                                    IsBlank(gblContador),
+                                    Patch(ConsecutivoLST, Defaults(ConsecutivoLST), {Title: gblTipoConsec, Tipo: gblTipoConsec, Valor: Text(gblN)}),
+                                    Patch(ConsecutivoLST, gblContador, {Valor: Text(gblN)})
+                                ),
+                                Blank()
+                            )
+                        )
+                    );
+                    If(
+                        !gblReservaOK,
+                        Notify("Otra persona está creando una solicitud en este momento. No se creó nada. Intenta de nuevo.", NotificationType.Warning);
+                        UpdateContext({ctxFallo: true}),
+                        Set(gblNoGuardar, gblTipoConsec & "-" & Text(gblN, "00000"));
+                        Set(
+                            gblHdr,
+                            IfError(
+                                Patch(
+                                    SolicitudesLST,
+                                    Defaults(SolicitudesLST),
+                                    {
+                                        Title: gblNoGuardar,
+                                        Solicitante: UsuarioActual,
+                                        SolicitanteEmail: gblUserEmail,
+                                        CentroCosto: {Id: nuevaCentro.Selected.Id, Value: nuevaCentro.Selected.Cod},
+                                        CentroCostoCod: nuevaCentro.Selected.Cod,
+                                        Motivo: Trim(nuevaMotivo.Text),
+                                        FechaSolicitud: Today(),
+                                        MontoTotal: gblTotal,
+                                        Estado: {Value: gblEstadoNuevo},
+                                        NivelActual: gblNivelNuevo,
+                                        AprobadorEmail: gblAprobNuevo,
+                                        RequiereFinanzas: gblTotal >= gblUmbral,
+                                        FechaEnvio: Now()
+                                    }
+                                ),
+                                Blank()
+                            )
+                        );
+                        If(
+                            IsBlank(gblHdr),
+                            Notify("No se pudo crear la solicitud. Intenta de nuevo.", NotificationType.Error);
+                            UpdateContext({ctxFallo: true})
+                        )
+                    ),
+                    Set(gblNoGuardar, gblEditNo);
+                    Set(gblHdr, gblEdit)
+                );
+                If(
+                    !ctxFallo,
+                    ClearCollect(colOld, Filter(GastosLST, Title = gblNoGuardar));
+                    Clear(colCreados);
+                    IfError(
+                        ForAll(
+                            colGastosNuevo As G,
+                            Collect(
+                                colCreados,
+                                Patch(
+                                    GastosLST,
+                                    Defaults(GastosLST),
+                                    {
+                                        Title: gblNoGuardar,
+                                        Solicitud: {Id: gblHdr.ID, Value: gblNoGuardar},
+                                        Categoria: {Id: G.CatId, Value: G.Cat},
+                                        CategoriaNombre: G.Cat,
+                                        FechaGasto: G.Fecha,
+                                        Proveedor: G.Prov,
+                                        Descripcion: G.Desc,
+                                        Monto: G.Monto,
+                                        NumeroRecibo: G.Recibo
+                                    }
+                                )
+                            )
+                        );
+                        true,
+                        UpdateContext({ctxFallo: true})
+                    );
+                    If(
+                        !ctxFallo && gblEditId > 0,
+                        Set(
+                            gblHdr2,
+                            IfError(
+                                Patch(
+                                    SolicitudesLST,
+                                    gblEdit,
+                                    {
+                                        CentroCosto: {Id: nuevaCentro.Selected.Id, Value: nuevaCentro.Selected.Cod},
+                                        CentroCostoCod: nuevaCentro.Selected.Cod,
+                                        Motivo: Trim(nuevaMotivo.Text),
+                                        MontoTotal: gblTotal,
+                                        Estado: {Value: gblEstadoNuevo},
+                                        NivelActual: gblNivelNuevo,
+                                        AprobadorEmail: gblAprobNuevo,
+                                        RequiereFinanzas: gblTotal >= gblUmbral,
+                                        FechaEnvio: Now()
+                                    }
+                                ),
+                                Blank()
+                            )
+                        );
+                        If(IsBlank(gblHdr2), UpdateContext({ctxFallo: true}))
+                    );
+                    If(
+                        ctxFallo,
+                        ForAll(colCreados As C, Remove(GastosLST, C));
+                        If(gblEditId = 0, Remove(SolicitudesLST, gblHdr));
+                        Notify("No se pudo guardar la solicitud. No se aplicó ningún cambio. Intenta de nuevo.", NotificationType.Error),
+                        ForAll(colOld As O, Remove(GastosLST, O));
+                        If(gblEditId = 0, IfError(
+                            Patch(
+                                BitacoraLST,
+                                Defaults(BitacoraLST),
+                                {
+                                    Title: gblNoGuardar,
+                                    Solicitud: {Id: gblHdr.ID, Value: gblNoGuardar},
+                                    Accion: {Value: "Creada"},
+                                    Nivel: 0,
+                                    Actor: UsuarioActual,
+                                    ActorEmail: gblUserEmail,
+                                    EstadoAnterior: "",
+                                    EstadoNuevo: "Borrador",
+                                    Comentario: "",
+                                    FechaAccion: Now()
+                                }
+                            );
+                            true,
+                            Notify("El cambio se guardó, pero no se pudo escribir en la bitácora.", NotificationType.Warning)
+                        ));
+                        IfError(
+                            Patch(
+                                BitacoraLST,
+                                Defaults(BitacoraLST),
+                                {
+                                    Title: gblNoGuardar,
+                                    Solicitud: {Id: gblHdr.ID, Value: gblNoGuardar},
+                                    Accion: {Value: "Enviada"},
+                                    Nivel: 1,
+                                    Actor: UsuarioActual,
+                                    ActorEmail: gblUserEmail,
+                                    EstadoAnterior: If(gblEditId > 0, gblEdit.Estado.Value, "Borrador"),
+                                    EstadoNuevo: gblEstadoNuevo,
+                                    Comentario: "",
+                                    FechaAccion: Now()
+                                }
+                            );
+                            true,
+                            Notify("El cambio se guardó, pero no se pudo escribir en la bitácora.", NotificationType.Warning)
+                        );
+                        Set(gblSelId, gblHdr.ID);
+                        UpdateContext({ctxGuardando: false});
+                        Notify("Solicitud enviada a aprobación.", NotificationType.Success);
+                        Navigate(DetalleSolicitudScreen, ScreenTransition.None)
+                    )
+                );
+                If(ctxFallo, UpdateContext({ctxGuardando: false}))
+            )
+        PressedColor: =Color.White
+        PressedFill: =ColorPrimario
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Enviar a aprobación"
+        Width: =260
+        X: =1062
+        Y: =596
+        ZIndex: =47
+
+    nuevaCancelar As button:
+        Align: =Align.Center
+        BorderColor: =Color.Transparent
+        BorderThickness: =0
+        Color: =ColorTextoSuave
+        DisabledColor: =ColorTextoSuave
+        DisabledFill: =ColorBorde
+        Fill: =Color.Transparent
+        Font: =Font.'Open Sans'
+        FontWeight: =FontWeight.Normal
+        Height: =40
+        HoverColor: =ColorTextoSuave
+        HoverFill: =ColorFondo
+        OnSelect: |-
+            =Set(gblEditId, 0);
+            Navigate(If(gblEditId > 0, DetalleSolicitudScreen, MisSolicitudesScreen), ScreenTransition.None)
+        PressedColor: =ColorTextoSuave
+        PressedFill: =ColorFondo
+        RadiusBottomLeft: =8
+        RadiusBottomRight: =8
+        RadiusTopLeft: =8
+        RadiusTopRight: =8
+        Size: =12
+        Text: ="Cancelar"
+        Width: =516
+        X: =806
+        Y: =656
+        ZIndex: =48
